@@ -1,0 +1,7 @@
+.DS_Store
+api_store.py
+.vscode/
+output.wav
+modules/__pycache__/
+MUJOCO_LOG
+outside_project
