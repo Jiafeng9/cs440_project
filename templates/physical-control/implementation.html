@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Implementation Options - Physical Control | RoboLab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Include highlight.js for code syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-house-door"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#research"><i class="bi bi-journal-text"></i> Research</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/simulator"><i class="bi bi-controller"></i> Simulator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/physical-control"><i class="bi bi-sliders"></i> Physical Control</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#visualization"><i class="bi bi-bar-chart-line"></i> Visualization</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link github-link" href="https://github.com/your-username/robolab" target="_blank">
+                            <i class="bi bi-github"></i> GitHub
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="bg-light py-2">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/physical-control">Physical Control</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Implementation Options</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="py-4 bg-primary text-white">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Implementation Options</h1>
+            <p class="lead">Different approaches for implementing control algorithms for robotic systems</p>
+        </div>
+    </header>
+
+    <!-- Implementation Options Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Choosing the Right Implementation Approach</h3>
+                            <p class="card-text">Selecting the appropriate control algorithm implementation depends on various factors including hardware constraints, performance requirements, and development resources. This guide will help you explore different options and make informed decisions.</p>
+                            
+                            <div class="row mt-4">
+                                <div class="col-md-4 text-center mb-4">
+                                    <div class="p-3">
+                                        <i class="bi bi-speedometer2 display-1 text-primary"></i>
+                                        <h4 class="mt-3">Performance</h4>
+                                        <p>Consider speed, accuracy, and resource requirements</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center mb-4">
+                                    <div class="p-3">
+                                        <i class="bi bi-tools display-1 text-primary"></i>
+                                        <h4 class="mt-3">Complexity</h4>
+                                        <p>Balance implementation difficulty with available expertise</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center mb-4">
+                                    <div class="p-3">
+                                        <i class="bi bi-arrow-repeat display-1 text-primary"></i>
+                                        <h4 class="mt-3">Adaptability</h4>
+                                        <p>Consider how the system handles changing conditions</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Implementation Approaches -->
+            <div class="row g-4">
+                <!-- Traditional Control Card -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="card-title mb-0">Traditional Control</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Classic control approaches including PID, state feedback, and model-based methods.</p>
+                            
+                            <h5 class="mt-4">Key Components:</h5>
+                            <ul>
+                                <li>PID Control</li>
+                                <li>State Feedback</li>
+                                <li>Model Predictive Control</li>
+                                <li>Adaptive Control</li>
+                            </ul>
+                            
+                            <h5 class="mt-4">Advantages:</h5>
+                            <ul>
+                                <li>Well-established theoretical foundation</li>
+                                <li>Predictable behavior</li>
+                                <li>Lower computational requirements</li>
+                                <li>Easier to implement and debug</li>
+                            </ul>
+                            
+                            <h5 class="mt-4">Sample Code:</h5>
+                            <div class="code-sample">
+                                <pre><code class="language-python">
+class PIDController:
+    def __init__(self, kp, ki, kd):
+        self.kp = kp  # Proportional gain
+        self.ki = ki  # Integral gain
+        self.kd = kd  # Derivative gain
+        self.prev_error = 0
+        self.integral = 0
+        
+    def update(self, setpoint, measurement, dt):
+        # Calculate error
+        error = setpoint - measurement
+        
+        # Proportional term
+        p_term = self.kp * error
+        
+        # Integral term
+        self.integral += error * dt
+        i_term = self.ki * self.integral
+        
+        # Derivative term
+        derivative = (error - self.prev_error) / dt
+        d_term = self.kd * derivative
+        
+        # Update previous error
+        self.prev_error = error
+        
+        # Calculate control output
+        control = p_term + i_term + d_term
+        
+        return control
+                                </code></pre>
+                            </div>
+                            
+                            <a href="#traditional-modal" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#traditionalModal">
+                                <i class="bi bi-code-slash"></i> Explore Traditional Implementation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Reinforcement Learning Card -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-danger text-white">
+                            <h3 class="card-title mb-0">Reinforcement Learning</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Using RL algorithms to learn optimal control policies from experience.</p>
+                            
+                            <h5 class="mt-4">Key Approaches:</h5>
+                            <ul>
+                                <li>Deep Q-Networks (DQN)</li>
+                                <li>Policy Gradient Methods</li>
+                                <li>Actor-Critic Architectures</li>
+                                <li>Model-Based RL</li>
+                            </ul>
+                            
+                            <h5 class="mt-4">Advantages:</h5>
+                            <ul>
+                                <li>Can learn complex, nonlinear control policies</li>
+                                <li>No need for explicit system modeling</li>
+                                <li>Adaptable to changing conditions</li>
+                                <li>Potential for better performance with sufficient training</li>
+                            </ul>
+                            
+                            <h5 class="mt-4">Sample Code:</h5>
+                            <div class="code-sample">
+                                <pre><code class="language-python">
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Simple policy network for RL control
+class PolicyNetwork(nn.Module):
+    def __init__(self, state_dim, action_dim):
+        super(PolicyNetwork, self).__init__()
+        self.network = nn.Sequential(
+            nn.Linear(state_dim, 128),
+            nn.ReLU(),
+            nn.Linear(128, 128),
+            nn.ReLU(),
+            nn.Linear(128, action_dim)
+        )
+        
+    def forward(self, state):
+        return self.network(state)
+        
+# Training loop would follow...
+                                </code></pre>
+                            </div>
+                            
+                            <a href="#rl-modal" class="btn btn-danger mt-3" data-bs-toggle="modal" data-bs-target="#rlModal">
+                                <i class="bi bi-code-slash"></i> Explore RL Implementation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hybrid Approaches Card -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-success text-white">
+                            <h3 class="card-title mb-0">Hybrid Approaches</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Combining traditional control with learning-based methods for improved performance.</p>
+                            
+                            <h5 class="mt-4">Key Strategies:</h5>
+                            <ul>
+                                <li>RL for High-Level Planning + PID for Execution</li>
+                                <li>Learning-Based System Identification + Model-Based Control</li>
+                                <li>RL for Parameter Tuning of Traditional Controllers</li>
+                                <li>Guided Policy Search with Expert Demonstrations</li>
+                            </ul>
+                            
+                            <h5 class="mt-4">Advantages:</h5>
+                            <ul>
+                                <li>Combines strengths of both approaches</li>
+                                <li>Better safety guarantees than pure RL</li>
+                                <li>Better adaptability than pure traditional control</li>
+                                <li>Practical for real-world deployment</li>
+                            </ul>
+                            
+                            <h5 class="mt-4">Sample Code:</h5>
+                            <div class="code-sample">
+                                <pre><code class="language-python">
+class HybridController:
+    def __init__(self, kp, ki, kd, policy_network):
+        # Initialize PID controller
+        self.pid = PIDController(kp, ki, kd)
+        
+        # Initialize policy network
+        self.policy = policy_network
+        
+    def update(self, state, setpoint, measurement, dt):
+        # Get RL policy output
+        with torch.no_grad():
+            action_offset = self.policy(torch.FloatTensor(state))
+            
+        # Get PID control output
+        pid_output = self.pid.update(setpoint, measurement, dt)
+        
+        # Combine PID and RL outputs
+        control = pid_output + action_offset.item()
+        
+        return control
+                                </code></pre>
+                            </div>
+                            
+                            <a href="#hybrid-modal" class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#hybridModal">
+                                <i class="bi bi-code-slash"></i> Explore Hybrid Implementation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Implementation Guide Section -->
+            <div class="row mt-5">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Implementation Guide</h3>
+                            <p class="card-text">Follow these steps to implement your chosen control approach:</p>
+                            
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><i class="bi bi-1-circle-fill text-primary me-2"></i>System Modeling</h4>
+                                            <p class="card-text">Start by understanding and modeling your robotic system. For traditional control, this means deriving mathematical models. For RL, this means defining the state and action spaces.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><i class="bi bi-2-circle-fill text-primary me-2"></i>Controller Design</h4>
+                                            <p class="card-text">Design your controller based on the chosen approach. For PID, this means selecting gains. For RL, this means designing network architecture and reward function.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><i class="bi bi-3-circle-fill text-primary me-2"></i>Implementation</h4>
+                                            <p class="card-text">Implement your controller in code. Make sure to handle edge cases, safety constraints, and real-time performance requirements.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><i class="bi bi-4-circle-fill text-primary me-2"></i>Testing & Tuning</h4>
+                                            <p class="card-text">Test your controller in simulation first, then gradually move to real hardware. Tune parameters based on performance metrics.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info mt-3">
+                                <i class="bi bi-info-circle-fill me-2"></i> Need help with implementation? Check out our <a href="/physical-control/troubleshooting" class="alert-link">Troubleshooting Guide</a> for common issues and solutions.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Decision Helper Tool -->
+            <div class="row mt-5">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="card-title mb-0">Implementation Approach Decision Helper</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Answer a few questions to get a recommendation on which implementation approach might work best for your project:</p>
+                            
+                            <form id="decisionHelperForm">
+                                <div class="mb-3">
+                                    <label class="form-label">What is your primary concern?</label>
+                                    <select class="form-select" id="primaryConcern">
+                                        <option value="performance">Performance & Accuracy</option>
+                                        <option value="development">Development Time & Simplicity</option>
+                                        <option value="adaptability">Adaptability & Robustness</option>
+                                        <option value="resources">Computational Resources</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">How well do you understand your system dynamics?</label>
+                                    <select class="form-select" id="systemKnowledge">
+                                        <option value="high">Very well (detailed mathematical model available)</option>
+                                        <option value="medium">Moderately well (approximate model available)</option>
+                                        <option value="low">Not well (complex or poorly understood dynamics)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">What computational resources are available?</label>
+                                    <select class="form-select" id="computationalResources">
+                                        <option value="high">High (powerful CPUs/GPUs available)</option>
+                                        <option value="medium">Medium (standard desktop/laptop)</option>
+                                        <option value="low">Low (embedded systems with limited resources)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">How much time do you have for development?</label>
+                                    <select class="form-select" id="developmentTime">
+                                        <option value="high">Long-term project (months or more)</option>
+                                        <option value="medium">Medium-term project (weeks to months)</option>
+                                        <option value="low">Short-term project (days to weeks)</option>
+                                    </select>
+                                </div>
+                                
+                                <button type="button" class="btn btn-primary" onclick="getRecommendation()">
+                                    Get Recommendation
+                                </button>
+                            </form>
+                            
+                            <div id="recommendationResult" class="mt-4 d-none">
+                                <div class="alert alert-success">
+                                    <h4 class="alert-heading"><i class="bi bi-lightbulb-fill me-2"></i>Recommendation:</h4>
+                                    <p id="recommendationText">Based on your answers, we recommend using <strong id="recommendedApproach">Hybrid Approach</strong>.</p>
+                                    <hr>
+                                    <p id="recommendationReason">This approach balances performance with development complexity and is suitable for systems with medium complexity.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Traditional Control Modal -->
+    <div class="modal fade" id="traditionalModal" tabindex="-1" aria-labelledby="traditionalModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="traditionalModalLabel">Traditional Control Implementation</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4>Full PID Controller Implementation</h4>
+                    
+                    <div class="code-sample">
+                        <pre><code class="language-python">
+import numpy as np
+import matplotlib.pyplot as plt
+
+class PIDController:
+    def __init__(self, kp, ki, kd, setpoint, windup_guard=20.0):
+        self.kp = kp
+        self.ki = ki
+        self.kd = kd
+        self.setpoint = setpoint
+        self.windup_guard = windup_guard
+        self.reset()
+        
+    def reset(self):
+        self.prev_error = 0
+        self.integral = 0
+        self.last_time = None
+        
+    def update(self, measurement, current_time=None):
+        # If time is not provided, use delta_time = 1
+        if self.last_time is None or current_time is None:
+            delta_time = 1
+        else:
+            delta_time = current_time - self.last_time
+        
+        # Calculate error
+        error = self.setpoint - measurement
+        
+        # Calculate P term
+        p_term = self.kp * error
+        
+        # Calculate I term
+        self.integral += error * delta_time
+        
+        # Apply anti-windup to integral term
+        if self.integral > self.windup_guard:
+            self.integral = self.windup_guard
+        elif self.integral < -self.windup_guard:
+            self.integral = -self.windup_guard
+            
+        i_term = self.ki * self.integral
+        
+        # Calculate D term
+        if delta_time > 0:
+            derivative = (error - self.prev_error) / delta_time
+        else:
+            derivative = 0
+            
+        d_term = self.kd * derivative
+        
+        # Update state
+        self.prev_error = error
+        self.last_time = current_time
+        
+        # Calculate total output
+        output = p_term + i_term + d_term
+        
+        return output
+
+# System simulation
+def simulate_system(controller, system_model, duration, dt=0.01, noise_std=0.0):
+    """
+    Simulate a control system with the given controller and system model.
+    """
+    time_points = np.arange(0, duration, dt)
+    num_steps = len(time_points)
+    
+    # Initialize arrays to store results
+    measurements = np.zeros(num_steps)
+    control_signals = np.zeros(num_steps)
+    setpoints = np.zeros(num_steps)
+    
+    # Initial state
+    measurements[0] = 0
+    
+    # Run simulation
+    for i in range(1, num_steps):
+        t = time_points[i]
+        
+        # Get current measurement (with optional noise)
+        current_measurement = measurements[i-1]
+        if noise_std > 0:
+            current_measurement += np.random.normal(0, noise_std)
+        
+        # Get control signal
+        control_signal = controller.update(current_measurement, t)
+        control_signals[i] = control_signal
+        
+        # Apply control to system and get new measurement
+        measurements[i] = system_model(current_measurement, control_signal, dt)
+        
+        # Store setpoint for plotting
+        setpoints[i] = controller.setpoint
+    
+    return time_points, measurements, control_signals, setpoints
+
+# Example system model (first-order system with time constant)
+def first_order_system(current_value, input_value, dt, time_constant=1.0):
+    return current_value + (input_value - current_value) * dt / time_constant
+
+# Example usage
+if __name__ == "__main__":
+    # Create controller
+    pid = PIDController(kp=1.0, ki=0.1, kd=0.05, setpoint=1.0)
+    
+    # Simulate
+    time_points, measurements, control_signals, setpoints = simulate_system(
+        pid, first_order_system, duration=10.0, dt=0.01, noise_std=0.01)
+    
+    # Plot results
+    plt.figure(figsize=(12, 6))
+    
+    plt.subplot(2, 1, 1)
+    plt.plot(time_points, measurements, 'b-', label='System Output')
+    plt.plot(time_points, setpoints, 'r--', label='Setpoint')
+    plt.grid(True)
+    plt.legend()
+    plt.title('PID Control Simulation')
+    plt.ylabel('Output')
+    
+    plt.subplot(2, 1, 2)
+    plt.plot(time_points, control_signals, 'g-', label='Control Signal')
+    plt.grid(True)
+    plt.legend()
+    plt.xlabel('Time')
+    plt.ylabel('Control Signal')
+    
+    plt.tight_layout()
+    plt.show()
+                        </code></pre>
+                    </div>
+                    
+                    <h4 class="mt-4">Key Implementation Considerations</h4>
+                    <ul>
+                        <li><strong>Anti-windup protection:</strong> Prevent integral term from growing too large</li>
+                        <li><strong>Time-based calculation:</strong> Handle variable time steps properly</li>
+                        <li><strong>Derivative filtering:</strong> Add low-pass filter to derivative term if needed</li>
+                        <li><strong>Setpoint weighting:</strong> Adjust how setpoint changes affect different terms</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="#" class="btn btn-primary">Download Complete Code</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RL Modal and Hybrid Modal would be similar -->
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container text-center">
+            <p>© 2025 RoboLab - Robotics Education & Research Platform. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize syntax highlighting
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightBlock(block);
+            });
+        });
+        
+        // Implementation approach recommendation logic
+        function getRecommendation() {
+            const primaryConcern = document.getElementById('primaryConcern').value;
+            const systemKnowledge = document.getElementById('systemKnowledge').value;
+            const computationalResources = document.getElementById('computationalResources').value;
+            const developmentTime = document.getElementById('developmentTime').value;
+            
+            let approach = '';
+            let reason = '';
+            
+            // Simple decision logic - in a real application this would be more sophisticated
+            if (systemKnowledge === 'high' && (computationalResources === 'low' || developmentTime === 'low')) {
+                approach = 'Traditional Control (PID or MPC)';
+                reason = 'With good system knowledge and limited resources or time, traditional control offers the best balance of performance and implementation simplicity.';
+            } else if (systemKnowledge === 'low' && computationalResources === 'high' && developmentTime === 'high') {
+                approach = 'Reinforcement Learning';
+                reason = 'With limited system knowledge but good computational resources and development time, RL can learn optimal control policies without an explicit system model.';
+            } else {
+                approach = 'Hybrid Approach';
+                reason = 'A hybrid approach offers a good balance between the reliability of traditional control and the adaptability of learning-based methods.';
+            }
+            
+            // Adjust based on primary concern
+            if (primaryConcern === 'performance' && approach === 'Traditional Control (PID or MPC)') {
+                approach = 'Model Predictive Control';
+                reason += ' Specifically, MPC offers excellent performance for well-modeled systems.';
+            } else if (primaryConcern === 'resources' && approach === 'Reinforcement Learning') {
+                approach = 'Hybrid Approach with Lightweight RL';
+                reason = 'For resource-constrained systems, a hybrid approach with a lightweight RL component can offer adaptability without excessive computational demands.';
+            }
+            
+            // Display recommendation
+            document.getElementById('recommendedApproach').textContent = approach;
+            document.getElementById('recommendationReason').textContent = reason;
+            document.getElementById('recommendationResult').classList.remove('d-none');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

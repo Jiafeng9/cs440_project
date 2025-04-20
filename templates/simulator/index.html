@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High-Performance MuJoCo Simulation | RoboLab</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/modules/simulator.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-house-door"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/simulator"><i class="bi bi-controller"></i> Simulator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/trajectory"><i class="bi bi-graph-up"></i> Trajectory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link github-link" href="https://github.com/your-username/robolab" target="_blank">
+                            <i class="bi bi-github"></i> GitHub
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <h1 class="text-center mb-4">MuJoCo Simulation</h1>
+        <div class="connection-info card mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><strong>Connection Status:</strong> <span id="connection_status" class="status">Waiting for connection...</span></p>
+                        <p><strong>Renderer:</strong> <span id="renderer_info">Detecting...</span></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>Server FPS:</strong> <span id="server_fps">0</span></p>
+                        <p><strong>Client FPS:</strong> <span id="client_fps">0</span></p>
+                        <p><strong>Frame Count:</strong> <span id="frame_count">0</span></p>
+                        <p><strong>Current Resolution:</strong> <span id="current_resolution">640x480</span></p>
+                        <audio id="robotic_sound" class="bi bi-volume-up" controls>
+                            <source src="/static/audio/output.wav" type="audio/wav">
+                        </audio>
+                        
+
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <div class="controls-panel card">
+                            <div class="card-header">
+                                <h2 class="h5 mb-0">Simulation Controls</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2 mb-2">
+                                    <button onclick="startSimulation()" class="btn btn-success">
+                                        <i class="bi bi-play-fill"></i> Start Simulation
+                                    </button>
+                                    <button onclick="stopSimulation()" class="btn btn-danger">
+                                        <i class="bi bi-stop-fill"></i> Stop Simulation
+                                    </button>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="simulation-container">
+                    <div class="image-container">
+                        <img id="sim_view" src="" alt="Simulation View" class="img-fluid rounded shadow">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="black-board-container">
+                    <img id="chalk_trajectory" src="" alt="Chalk Trajectory" class="img-fluid rounded shadow">
+                </div>
+        </div>
+        <div class="card mb-4" id="Typing Question">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h2 class="h5 mb-0">Typing Question</h2>
+                <div class="input-group">
+                    <input type="text" id="user_question" class="form-control" placeholder="Enter your question here">
+                    <button type="button" id="submitQuestionbtn" class="btn btn-outline-secondary" onclick="submitQuestion()">Submit</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4 collapse show" id="Showing LLM response">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h2 class="h5 mb-0">LLM response</h2>
+                <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#LLM_response" aria-expanded="true" 
+                    aria-controls="LLM_response">
+                 <i class="bi bi-chevron-down" id="collapseIcon"></i>
+                </button>
+            </div>
+            <div class="collapse show" id="LLM_response"></div>
+        </div>
+
+        
+    
+    <footer class="py-4 text-center">
+        <div class="container">
+            <p>© 2025 RoboLab - Robotics Education & Research Platform. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/modules/simulator.js"></script>
+</body>
+</html>

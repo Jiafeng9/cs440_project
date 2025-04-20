@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theory Notes - Physical Control | RoboLab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Include MathJax for rendering mathematical notations -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-house-door"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#research"><i class="bi bi-journal-text"></i> Research</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/simulator"><i class="bi bi-controller"></i> Simulator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/physical-control"><i class="bi bi-sliders"></i> Physical Control</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#visualization"><i class="bi bi-bar-chart-line"></i> Visualization</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link github-link" href="https://github.com/your-username/robolab" target="_blank">
+                            <i class="bi bi-github"></i> GitHub
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="bg-light py-2">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/physical-control">Physical Control</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Theory Notes</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="py-4 bg-primary text-white">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Theory Notes</h1>
+            <p class="lead">Theoretical foundations and mathematical proofs for various control algorithms</p>
+        </div>
+    </header>
+
+    <!-- Theory and Notes Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3">
+                    <!-- Sidebar/Navigation for Theory Notes -->
+                    <div class="list-group sticky-top pt-3">
+                        <a href="#pid-theory" class="list-group-item list-group-item-action active">PID Control Theory</a>
+                        <a href="#position-control-theory" class="list-group-item list-group-item-action">Position Control</a>
+                        <a href="#rl-theory" class="list-group-item list-group-item-action">Reinforcement Learning</a>
+                        <a href="#hybrid-approaches" class="list-group-item list-group-item-action">Hybrid Approaches</a>
+                        <a href="#stability-analysis" class="list-group-item list-group-item-action">Stability Analysis</a>
+                        <button class="btn btn-success mt-3 w-100" data-bs-toggle="modal" data-bs-target="#addNoteModal">
+                            <i class="bi bi-plus-circle"></i> Add New Note
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-lg-9">
+                    <!-- Theory Content Container -->
+                    <div class="card mb-4" id="pid-theory">
+                        <div class="card-body">
+                            <h3 class="card-title">PID Control Theory</h3>
+                            <div class="theory-content">
+                                <p>PID (Proportional-Integral-Derivative) control is one of the most commonly used feedback control mechanisms. The controller continuously calculates an error value \(e(t)\) as the difference between a desired setpoint and a measured process variable and applies a correction based on proportional, integral, and derivative terms.</p>
+                                
+                                <div class="math-block bg-light p-3 rounded">
+                                    <p>The PID controller output is given by:</p>
+                                    <p>\[u(t) = K_p e(t) + K_i \int_{0}^{t} e(\tau) d\tau + K_d \frac{d}{dt}e(t)\]</p>
+                                    <p>Where:</p>
+                                    <ul>
+                                        <li>\(K_p\): Proportional gain</li>
+                                        <li>\(K_i\): Integral gain</li>
+                                        <li>\(K_d\): Derivative gain</li>
+                                        <li>\(e(t)\): Error at time t</li>
+                                    </ul>
+                                </div>
+                                
+                                <h4 class="mt-4">Tuning Challenges</h4>
+                                <p>One of the main challenges with PID control is finding the optimal gain parameters. Methods include:</p>
+                                <ul>
+                                    <li><strong>Ziegler-Nichols method</strong>: Empirical tuning rule that gives a good starting point</li>
+                                    <li><strong>Manual tuning</strong>: Adjusting parameters based on observed system behavior</li>
+                                    <li><strong>Auto-tuning algorithms</strong>: Using optimization algorithms to find optimal gains</li>
+                                </ul>
+                                
+                                <div class="editor-notes bg-warning-subtle p-3 rounded mt-4">
+                                    <h5><i class="bi bi-pencil"></i> Personal Notes</h5>
+                                    <p>In my experiments, I've noticed that for precision control of robotic arms, a properly tuned PID controller with feedforward compensation works better than a pure PID in many cases. The feedforward term helps compensate for known dynamics.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-end mt-3">
+                                <button class="btn btn-outline-primary btn-sm me-2">
+                                    <i class="bi bi-pencil"></i> Edit Note
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4" id="position-control-theory">
+                        <div class="card-body">
+                            <h3 class="card-title">Position Control Theory</h3>
+                            <p>Position control involves moving a system to a desired position with minimal error. In robotics, this often involves controlling joint angles or end-effector positions.</p>
+                            
+                            <div class="math-block bg-light p-3 rounded">
+                                <p>A simple position control law might take the form:</p>
+                                <p>\[u(t) = K_p (x_d - x(t)) + K_d (\dot{x}_d - \dot{x}(t))\]</p>
+                                <p>Where:</p>
+                                <ul>
+                                    <li>\(x_d\): Desired position</li>
+                                    <li>\(x(t)\): Current position</li>
+                                    <li>\(\dot{x}_d\): Desired velocity</li>
+                                    <li>\(\dot{x}(t)\): Current velocity</li>
+                                </ul>
+                            </div>
+                            
+                            <h4 class="mt-4">Challenges in Position Control</h4>
+                            <p>Position control faces several challenges:</p>
+                            <ul>
+                                <li><strong>System nonlinearities</strong>: Friction, backlash, and other nonlinear effects</li>
+                                <li><strong>Model uncertainties</strong>: Unknown or poorly modeled dynamics</li>
+                                <li><strong>External disturbances</strong>: Unexpected forces or loads</li>
+                                <li><strong>Sensor noise</strong>: Inaccuracies in position measurements</li>
+                            </ul>
+                            
+                            <div class="editor-notes bg-warning-subtle p-3 rounded mt-4">
+                                <h5><i class="bi bi-pencil"></i> Personal Notes</h5>
+                                <p>I've found that when dealing with sparse point tracking, regularization methods help improve system stability and reduce the effect of outliers.</p>
+                            </div>
+                            
+                            <div class="d-flex justify-content-end mt-3">
+                                <button class="btn btn-outline-primary btn-sm me-2">
+                                    <i class="bi bi-pencil"></i> Edit Note
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mb-4" id="rl-theory">
+                        <div class="card-body">
+                            <h3 class="card-title">Reinforcement Learning Control</h3>
+                            <p>Reinforcement Learning (RL) approaches learn control policies through interaction with the environment, optimizing a reward signal without explicit programming.</p>
+                            
+                            <!-- Content would be similar to above sections -->
+                            <div class="d-flex justify-content-end mt-3">
+                                <button class="btn btn-outline-primary btn-sm me-2">
+                                    <i class="bi bi-pencil"></i> Edit Note
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- More theory sections as needed -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Note Modal -->
+    <div class="modal fade" id="addNoteModal" tabindex="-1" aria-labelledby="addNoteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNoteModalLabel">Add New Theory Note</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="noteTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="noteTitle" placeholder="Enter note title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="noteCategory" class="form-label">Category</label>
+                            <select class="form-select" id="noteCategory">
+                                <option selected>Select a category</option>
+                                <option value="pid">PID Control</option>
+                                <option value="position">Position Control</option>
+                                <option value="rl">Reinforcement Learning</option>
+                                <option value="hybrid">Hybrid Approaches</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="noteContent" class="form-label">Content</label>
+                            <textarea class="form-control" id="noteContent" rows="10" placeholder="Enter your theory notes here. You can use LaTeX for mathematical formulas like $E=mc^2$."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="noteCode" class="form-label">Code Example (optional)</label>
+                            <textarea class="form-control" id="noteCode" rows="5" placeholder="# Add code example here"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save Note</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container text-center">
+            <p>© 2025 RoboLab - Robotics Education & Research Platform. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

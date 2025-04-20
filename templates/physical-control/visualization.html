@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Visualization - Physical Control | RoboLab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Include Chart.js for visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-house-door"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#research"><i class="bi bi-journal-text"></i> Research</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/simulator"><i class="bi bi-controller"></i> Simulator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/physical-control"><i class="bi bi-sliders"></i> Physical Control</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#visualization"><i class="bi bi-bar-chart-line"></i> Visualization</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link github-link" href="https://github.com/your-username/robolab" target="_blank">
+                            <i class="bi bi-github"></i> GitHub
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="bg-light py-2">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/physical-control">Physical Control</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Performance Visualization</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="py-4 bg-primary text-white">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Performance Visualization</h1>
+            <p class="lead">Visualize and compare algorithm performance metrics</p>
+        </div>
+    </header>
+
+    <!-- Performance Visualization Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Response Time Comparison</h3>
+                            <p class="card-text">Compare how quickly different controllers reach the target position.</p>
+                            <canvas id="responseTimeChart" width="400" height="300"></canvas>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-outline-primary" onclick="updateChart('responseTimeChart')">
+                                    <i class="bi bi-arrow-repeat"></i> Update Data
+                                </button>
+                                <button class="btn btn-sm btn-outline-success" onclick="exportChartData('responseTimeChart')">
+                                    <i class="bi bi-download"></i> Export Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Tracking Error Comparison</h3>
+                            <p class="card-text">Visualize how accurately different controllers track the desired trajectory.</p>
+                            <canvas id="trackingErrorChart" width="400" height="300"></canvas>
+                            <div class="mt-3">
+                                <button class="btn btn-sm btn-outline-primary" onclick="updateChart('trackingErrorChart')">
+                                    <i class="bi bi-arrow-repeat"></i> Update Data
+                                </button>
+                                <button class="btn btn-sm btn-outline-success" onclick="exportChartData('trackingErrorChart')">
+                                    <i class="bi bi-download"></i> Export Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-12 mt-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Convergence Test</h3>
+                            <p class="card-text">Test how controller performance changes with different numbers of tracking points.</p>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="algorithmSelect" class="form-label">Algorithm</label>
+                                    <select class="form-select" id="algorithmSelect">
+                                        <option selected value="pid">PID Control</option>
+                                        <option value="adaptive-pid">Adaptive PID</option>
+                                        <option value="mpc">Model Predictive Control</option>
+                                        <option value="rl">Reinforcement Learning</option>
+                                        <option value="hybrid">RL+PID Hybrid</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="pointsRange" class="form-label">Number of Points: <span id="pointsValue">10</span></label>
+                                    <input type="range" class="form-range" min="3" max="50" value="10" id="pointsRange" oninput="document.getElementById('pointsValue').textContent = this.value">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="noiseRange" class="form-label">Noise Level: <span id="noiseValue">0.1</span></label>
+                                    <input type="range" class="form-range" min="0" max="1" step="0.05" value="0.1" id="noiseRange" oninput="document.getElementById('noiseValue').textContent = this.value">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <canvas id="convergenceChart" width="600" height="400"></canvas>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Test Results</h5>
+                                            <dl class="row">
+                                                <dt class="col-sm-6">Convergence Time:</dt>
+                                                <dd class="col-sm-6" id="convergenceTime">1.25s</dd>
+                                                
+                                                <dt class="col-sm-6">Steady State Error:</dt>
+                                                <dd class="col-sm-6" id="steadyStateError">0.05mm</dd>
+                                                
+                                                <dt class="col-sm-6">Overshoot:</dt>
+                                                <dd class="col-sm-6" id="overshoot">12.3%</dd>
+                                                
+                                                <dt class="col-sm-6">Rise Time:</dt>
+                                                <dd class="col-sm-6" id="riseTime">0.8s</dd>
+                                                
+                                                <dt class="col-sm-6">Settling Time:</dt>
+                                                <dd class="col-sm-6" id="settlingTime">2.1s</dd>
+                                            </dl>
+                                            <button class="btn btn-primary w-100" onclick="runConvergenceTest()">
+                                                <i class="bi bi-play-fill"></i> Run Test
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-12 mt-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Custom Performance Visualization</h3>
+                            <p class="card-text">Upload your own performance data to visualize and compare algorithm performance.</p>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="dataFileInput">
+                                        <button class="btn btn-primary" type="button">Upload</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-select" id="visualizationType">
+                                        <option selected>Select Visualization Type</option>
+                                        <option value="line">Line Chart</option>
+                                        <option value="bar">Bar Chart</option>
+                                        <option value="radar">Radar Chart</option>
+                                        <option value="scatter">Scatter Plot</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div id="customVisualizationContainer">
+                                <canvas id="customVisualizationChart" width="800" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container text-center">
+            <p>© 2025 RoboLab - Robotics Education & Research Platform. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Chart.js Visualizations -->
+    <script>
+        // Initialize charts when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Response Time Comparison Chart
+            const responseTimeCtx = document.getElementById('responseTimeChart').getContext('2d');
+            const responseTimeChart = new Chart(responseTimeCtx, {
+                type: 'line',
+                data: {
+                    labels: ['0s', '0.5s', '1.0s', '1.5s', '2.0s', '2.5s', '3.0s'],
+                    datasets: [{
+                        label: 'PID Controller',
+                        data: [0, 0.45, 0.75, 0.90, 0.95, 0.98, 1.0],
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        tension: 0.1,
+                        fill: false
+                    }, {
+                        label: 'RL Controller',
+                        data: [0, 0.6, 0.85, 0.95, 0.98, 0.99, 1.0],
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        tension: 0.1,
+                        fill: false
+                    }, {
+                        label: 'Hybrid Controller',
+                        data: [0, 0.55, 0.88, 0.96, 0.99, 0.995, 1.0],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        tension: 0.1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Step Response Comparison'
+                        },
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Normalized Response'
+                            },
+                            min: 0,
+                            max: 1.1
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time (s)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Tracking Error Comparison Chart
+            const trackingErrorCtx = document.getElementById('trackingErrorChart').getContext('2d');
+            const trackingErrorChart = new Chart(trackingErrorCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['PID', 'Adaptive PID', 'MPC', 'Pure RL', 'RL+PID Hybrid'],
+                    datasets: [{
+                        label: 'Mean Tracking Error (mm)',
+                        data: [2.5, 1.8, 1.2, 1.5, 0.9],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(255, 159, 64, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Tracking Error Comparison'
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Error (mm)'
+                            },
+                            min: 0
+                        }
+                    }
+                }
+            });
+
+            // Convergence Chart (Initialize with empty data)
+            const convergenceCtx = document.getElementById('convergenceChart').getContext('2d');
+            const convergenceChart = new Chart(convergenceCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 100}, (_, i) => (i * 0.05).toFixed(2)),
+                    datasets: [{
+                        label: 'System Response',
+                        data: [],
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        tension: 0.1,
+                        fill: false
+                    }, {
+                        label: 'Target Position',
+                        data: [],
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderDash: [5, 5],
+                        tension: 0,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Convergence Test'
+                        },
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Position'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time (s)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Initialize the custom visualization chart
+            const customCtx = document.getElementById('customVisualizationChart').getContext('2d');
+            const customChart = new Chart(customCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: []
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Custom Visualization'
+                        }
+                    }
+                }
+            });
+        });
+
+        // Functions to update and export chart data
+        function updateChart(chartId) {
+            // This would be replaced with actual data fetching and updating
+            alert(`Updating data for ${chartId}. In a real implementation, this would fetch new data from an API.`);
+        }
+
+        function exportChartData(chartId) {
+            // This would be replaced with actual data export functionality
+            alert(`Exporting data for ${chartId}. In a real implementation, this would download the data as CSV/JSON.`);
+        }
+
+        // Function to run a convergence test
+        function runConvergenceTest() {
+            const algorithm = document.getElementById('algorithmSelect').value;
+            const points = document.getElementById('pointsRange').value;
+            const noise = document.getElementById('noiseRange').value;
+            
+            // This would be replaced with actual test execution
+            alert(`Running convergence test with ${algorithm}, ${points} points, and noise level ${noise}. In a real implementation, this would execute the test and update the chart.`);
+            
+            // Simulate updating the convergence chart with new data
+            const chart = Chart.getChart('convergenceChart');
+            if (chart) {
+                // Generate sample response data (would be real data in production)
+                const targetData = Array(100).fill(1);
+                const responseData = [];
+                const numPoints = parseInt(points);
+                const noiseLevel = parseFloat(noise);
+                
+                for (let i = 0; i < 100; i++) {
+                    const t = i * 0.05;
+                    let response;
+                    
+                    if (algorithm === 'pid') {
+                        response = 1 - Math.exp(-t * 2) * (1 + t * 2);
+                    } else if (algorithm === 'rl') {
+                        response = 1 - Math.exp(-t * 3);
+                    } else if (algorithm === 'hybrid') {
+                        response = 1 - Math.exp(-t * 2.5) * (1 + t * 1.5);
+                    } else if (algorithm === 'adaptive-pid') {
+                        response = 1 - Math.exp(-t * 2.2) * (1 + t * 1.8);
+                    } else {
+                        response = 1 - Math.exp(-t * 2.8) * (1 + t * 1.2);
+                    }
+                    
+                    // Add noise that decreases as number of points increases
+                    const noiseFactor = noiseLevel * (10 / Math.sqrt(numPoints));
+                    response += (Math.random() - 0.5) * noiseFactor;
+                    
+                    // Bound response
+                    response = Math.max(0, Math.min(1.2, response));
+                    responseData.push(response);
+                }
+                
+                chart.data.datasets[0].data = responseData;
+                chart.data.datasets[1].data = targetData;
+                chart.update();
+                
+                // Update test results
+                let convergenceTime, steadyStateError, overshoot, riseTime, settlingTime;
+                
+                // Different results for different algorithms and parameters
+                if (algorithm === 'pid') {
+                    convergenceTime = (2.1 - numPoints * 0.01).toFixed(2);
+                    steadyStateError = (0.05 - numPoints * 0.0005).toFixed(4);
+                    overshoot = (12.3 - numPoints * 0.1).toFixed(1);
+                    riseTime = (0.8 - numPoints * 0.005).toFixed(2);
+                    settlingTime = (2.3 - numPoints * 0.01).toFixed(2);
+                } else if (algorithm === 'rl') {
+                    convergenceTime = (1.9 - numPoints * 0.01).toFixed(2);
+                    steadyStateError = (0.08 - numPoints * 0.0008).toFixed(4);
+                    overshoot = (8.5 - numPoints * 0.08).toFixed(1);
+                    riseTime = (0.7 - numPoints * 0.004).toFixed(2);
+                    settlingTime = (2.0 - numPoints * 0.01).toFixed(2);
+                } else {
+                    convergenceTime = (1.7 - numPoints * 0.008).toFixed(2);
+                    steadyStateError = (0.03 - numPoints * 0.0003).toFixed(4);
+                    overshoot = (10.2 - numPoints * 0.09).toFixed(1);
+                    riseTime = (0.65 - numPoints * 0.003).toFixed(2);
+                    settlingTime = (1.8 - numPoints * 0.009).toFixed(2);
+                }
+                
+                // Add noise effect
+                convergenceTime = (parseFloat(convergenceTime) + noiseLevel * 0.5).toFixed(2);
+                steadyStateError = (parseFloat(steadyStateError) + noiseLevel * 0.02).toFixed(4);
+                overshoot = (parseFloat(overshoot) + noiseLevel * 5).toFixed(1);
+                riseTime = (parseFloat(riseTime) + noiseLevel * 0.3).toFixed(2);
+                settlingTime = (parseFloat(settlingTime) + noiseLevel * 0.5).toFixed(2);
+                
+                // Update displayed values
+                document.getElementById('convergenceTime').textContent = convergenceTime + 's';
+                document.getElementById('steadyStateError').textContent = steadyStateError + 'mm';
+                document.getElementById('overshoot').textContent = overshoot + '%';
+                document.getElementById('riseTime').textContent = riseTime + 's';
+                document.getElementById('settlingTime').textContent = settlingTime + 's';
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

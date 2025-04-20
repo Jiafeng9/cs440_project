@@ -1,0 +1,137 @@
+/* Simulator Module CSS */
+
+.simulation-container {
+    background-color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.image-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    background-color: #1c1c1c;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 600px;
+    height: auto;
+    display: block;
+    border: none;
+    border-radius: 0;
+}
+
+.connection-info {
+    background-color: #f8f9fa;
+}
+
+.connection-info .status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    display: inline-block;
+}
+
+.controls-panel {
+    height: 100%;
+}
+
+.preset-buttons {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.resolution-warning {
+    color: #dc3545;
+    font-style: italic;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+}
+
+/* Status colors */
+#connection_status.connected {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+#connection_status.disconnected {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+#connection_status.connecting {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Error container */
+#error_container {
+    border-left: 4px solid #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+/* Performance metrics */
+.performance-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 120px;
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.stat-card .value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+.stat-card .label {
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .black-board {
+        margin-bottom: 1rem;
+    }
+    
+    .image-container {
+        min-height: 800px;
+    }
+    
+    .controls-panel {
+        height: auto;
+        margin-bottom: 1.5rem;
+    }
+}
+
+
+
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .black-board-container {
+        margin-bottom: 1rem;
+    }
+    
+}
