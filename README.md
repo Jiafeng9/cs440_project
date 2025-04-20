@@ -1,89 +1,108 @@
-# RoboLab: Robotics Education & Research Platform
+# CS440 Teaching Robot Project
 
-RoboLab is a comprehensive web-based platform for robotics education and research. It features a high-performance MuJoCo simulator, research tracking tools, and visualization components.
+An embodied teaching robot that can walk, write, and perform speaking-related gestures in a virtual classroom environment. This project integrates reinforcement learning, robot control, and interactive visualization to emulate natural teaching behaviors.
 
 ## Features
 
-- **High-Performance MuJoCo Simulator**: Real-time physics simulation with adjustable quality settings
-- **Research Tracker**: Keep up with the latest papers and advances in robotics
-- **Visualization Tools**: Analyze motion tracking and trajectory optimization
+- **Walking Module**: Utilizes reinforcement learning to enable autonomous walking.
+- **Writing Module**: Employs inverse kinematics to translate text into blackboard writing motions.
+- **Gesture Module**: Incorporates forward kinematics to synchronize gestures with speech.
+- **Virtual Classroom**: Simulates a traditional classroom setting with a blackboard, teacher’s desk, and student seating.
+- **Web-Based Visualization**: Real-time visualization using Flask, Bootstrap, and Socket.IO.
 
-## Installation
+## ⚙️ Installation (macOS + Conda)
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/your-username/robolab.git
-   cd robolab
-   ```
+### 1. Clone the Repository
 
-2. Create a virtual environment (optional but recommended):
-   ```
-   python -m venv venv
-   source venv/bin/activate  # On Windows, use: venv\Scripts\activate
-   ```
-
-3. Install the dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-
-4. Prepare the MuJoCo model files:
-   - Place your `.xml` model files in the `models/` directory
-   - By default, the application will look for `classroom.xml`
-
-## Usage
-
-1. Start the server:
-   ```
-   python server/app.py
-   ```
-
-2. Open your browser and go to:
-   ```
-   http://127.0.0.1:6006
-   ```
-
-## Simulator Configuration
-
-The simulator supports various quality and performance settings:
-
-- **Resolution**: From 320x240 to 4K (2560x1920)
-- **Image Quality**: Adjustable JPEG compression 
-- **Rendering Frequency**: Control frame rendering rate
-- **Physics Accuracy**: Adjust physics substeps for accuracy vs. performance
-- **Shadows**: Enable/disable for visual quality vs. performance
-
-## Project Structure
-
-```
-robolab/
-├── assets/                     # Static assets (CSS, JS, images)
-├── models/                     # MuJoCo model files
-├── server/                     # Server-side code
-│   ├── app.py                  # Main Flask application
-│   ├── config.py               # Configuration file
-│   └── modules/                # Server modules
-│       └── simulator.py        # Simulation module
-├── templates/                  # HTML templates
-│   ├── index.html              # Main page
-│   └── simulator/              # Simulator templates
-└── requirements.txt            # Python dependencies
+```bash
+git clone https://github.com/Jiafeng9/cs440_project.git
+cd cs440_project
 ```
 
-## Renderer Support
+### 2. Create and Activate Conda Environment
 
-The application automatically detects and uses the best available renderer:
+```bash
+conda create -n cs440 python=3.10
+conda activate cs440
+```
 
-- **GLFW**: Default for most platforms, requires a display
-- **EGL**: Hardware-accelerated rendering without a display (Linux)
-- **OSMesa**: Software-based rendering, slower but works everywhere
+### 3. Install Python Dependencies
 
-## License
+```bash
+pip install -r requirements.txt
+```
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### 4. Set Up External Directory and Clone Dependencies
 
-## Acknowledgments
+Create an external directory to house the required external repositories:
 
-- MuJoCo physics engine - https://mujoco.org/
-- Flask web framework - https://flask.palletsprojects.com/
-- Socket.IO for real-time communication - https://socket.io/
+```bash
+mkdir outside_project
+cd outside_project
+```
+
+#### Clone Unitree RL Gym
+
+```bash
+git clone https://github.com/unitreerobotics/unitree_rl_gym
+cd unitree_rl_gym
+# Follow their README to build the simulation backend (IsaacGym/MuJoCo)
+cd ..
+```
+
+#### Clone PantoMatrix (for speaking motion)
+
+```bash
+git clone https://github.com/PantoMatrix/PantoMatrix
+# Follow setup instructions for animation inference
+```
+
+#### Install MuJoCo
+
+Ensure MuJoCo is installed and licensed as per their [official documentation](https://mujoco.org/).
+
+## 🚀 Usage
+
+### 1. Start Simulation and Web Frontend
+
+From the `cs440_project` directory:
+
+```bash
+python server/app.py
+```
+
+Then, open your browser and navigate to:
+
+```
+http://127.0.0.1:6006
+```
+
+The robot will launch into the classroom, where it can walk, write on the blackboard, and perform gestures while “speaking”.
+
+## 🗂️ Project Structure
+
+```plaintext
+cs440_project/
+├── mujoco_models/           # MuJoCo XML files (e.g., classroom.xml)
+├── server/                  # Flask backend
+│   ├── app.py               # Entry point
+│   └── simulator.py         # MuJoCo interface
+├── frontend/                # HTML + JS + Bootstrap
+├── rl_module/               # Policy logic, configs
+├── panto_adapter/           # Gesture animation modules
+├── static/                  # Assets
+└── requirements.txt
+```
+
+## 📦 Acknowledgments
+
+- [Unitree Robotics](https://github.com/unitreerobotics/unitree_rl_gym)
+- [PantoMatrix](https://github.com/PantoMatrix/PantoMatrix)
+- [MuJoCo Physics Engine](https://mujoco.org/)
+- [Flask Web Framework](https://flask.palletsprojects.com/)
+- [Bootstrap](https://getbootstrap.com/)
+- [Flask-SocketIO](https://flask-socketio.readthedocs.io/)
+
+## 📄 License
+
+MIT License © Jiafeng9 2025

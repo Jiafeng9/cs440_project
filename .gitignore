@@ -5,3 +5,7 @@ output.wav
 modules/__pycache__/
 MUJOCO_LOG
 outside_project
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
