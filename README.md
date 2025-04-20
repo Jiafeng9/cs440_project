@@ -2,6 +2,29 @@
 
 An embodied teaching robot that can walk, write, and perform speaking-related gestures in a virtual classroom environment. This project integrates reinforcement learning, robot control, and interactive visualization to emulate natural teaching behaviors.
 
+## Demo Preview
+
+<table>
+  <tr>
+    <td align="center">
+        <img src="sound_with_movement.gif"width="200px"><br/>
+        Speaking with Gestures
+      </a>
+    </td>
+    <td align="center">
+        <img src="walking_turing_around.gif" width="200px" /><br/>
+        Walking & Turning
+      </a>
+    </td>
+    <td align="center">
+        <img src="writing.gif" width="200px"/><br/>
+        Writing on Blackboard
+      </a>
+    </td>
+
+  </tr>
+</table>
+
 ## Features
 
 - **Walking Module**: Utilizes reinforcement learning to enable autonomous walking.
@@ -9,6 +32,9 @@ An embodied teaching robot that can walk, write, and perform speaking-related ge
 - **Gesture Module**: Incorporates forward kinematics to synchronize gestures with speech.
 - **Virtual Classroom**: Simulates a traditional classroom setting with a blackboard, teacher’s desk, and student seating.
 - **Web-Based Visualization**: Real-time visualization using Flask, Bootstrap, and Socket.IO.
+
+
+
 
 ## ⚙️ Installation (macOS + Conda)
 
