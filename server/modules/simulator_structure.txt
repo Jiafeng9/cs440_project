@@ -1,0 +1,35 @@
+[主程序/服务器]
+    |
+    |-- start_simulation() → 创建并启动 unified_simulation_loop 线程
+    |       |
+    |       |-- [unified_simulation_loop 线程] ← 持续运行，渲染场景和画板
+    |               |
+    |               |-- 处理物理模拟
+    |               |-- 从 trajectory_points 队列获取点
+    |               |-- 渲染 3D 场景并发送帧
+    |               |-- 更新黑板轨迹并发送帧
+    |
+    |-- write_on_blackboard() → 创建并启动 process_blackboard_words 线程
+    |       |
+    |       |-- [process_blackboard_words 线程] ← 处理单词列表
+    |               |
+    |               |-- 对每个字母调用 writing_simulation()
+    |                       |
+    |                       |-- 创建并启动 _run_writing_thread 线程
+    |                               |
+    |                               |-- 计算字母轨迹
+    |                               |-- 对每个轨迹点调用 solve_ik_for_position()
+    |                               |-- 将点添加到 trajectory_points 队列
+
+    |-- walking_simulation() → 创建并启动 _walking_thread 线程
+    |       |
+    |       |-- [_walking_thread 线程] ← 处理行走模拟
+
+
+1. _run_writing_thread 线程通过 solve_ik_for_position 方法修改了 self.data（特别是 self.data.qpos，即关节角度），
+    然后 unified_simulation_loop 线程会使用这些修改后的数据。
+
+2. IK求解时：我们只想找到理论上的最佳姿态，不关心物理约束如何影响运动过程
+   实际执行时：我们希望模拟真实机器人的物理行为，所以添加了物理模拟
+
+3. 

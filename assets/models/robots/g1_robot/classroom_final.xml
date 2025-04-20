@@ -1,0 +1,384 @@
+<mujoco model="classroom">
+
+    <compiler angle="radian" meshdir="/Users/jiafeng/Desktop/cs440_robotic_project/assets/models/robots/g1_robot/meshes"/>
+    <visual>
+        <global ellipsoidinertia="true" />
+        <headlight diffuse="0.6 0.6 0.6" ambient="0.1 0.1 0.1" specular="0.9 0.9 0.9"/>
+        <rgba haze="0.15 0.25 0.35 1"/>
+    </visual>
+
+    <!-- <statistic meansize="0.144785" extent="1.23314" center="0.025392 2.0634e-05 -0.245975"/> -->
+    <default>
+        <joint damping="0.001" armature="0.01" frictionloss="0.1"/>
+    </default>
+
+    <option gravity="0 0 -9.81" timestep="0.002" />
+
+    <asset>
+        <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300"/>
+        <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+        <material name="blackboard" rgba="0 0 0 1" />
+        <material name="wood" rgba="0.8 0.6 0.4 1" />
+        <material name="metal" rgba="0.5 0.5 0.5 1" />
+        <material name="tile_white" rgba="1 1 1 1" />
+
+        <mesh name="pelvis" file="pelvis.STL"/>
+        <mesh name="pelvis_contour_link" file="pelvis_contour_link.STL"/>
+        <mesh name="left_hip_pitch_link" file="left_hip_pitch_link.STL"/>
+        <mesh name="left_hip_roll_link" file="left_hip_roll_link.STL"/>
+        <mesh name="left_hip_yaw_link" file="left_hip_yaw_link.STL"/>
+        <mesh name="left_knee_link" file="left_knee_link.STL"/>
+        <mesh name="left_ankle_pitch_link" file="left_ankle_pitch_link.STL"/>
+        <mesh name="left_ankle_roll_link" file="left_ankle_roll_link.STL"/>
+        <mesh name="right_hip_pitch_link" file="right_hip_pitch_link.STL"/>
+        <mesh name="right_hip_roll_link" file="right_hip_roll_link.STL"/>
+        <mesh name="right_hip_yaw_link" file="right_hip_yaw_link.STL"/>
+        <mesh name="right_knee_link" file="right_knee_link.STL"/>
+        <mesh name="right_ankle_pitch_link" file="right_ankle_pitch_link.STL"/>
+        <mesh name="right_ankle_roll_link" file="right_ankle_roll_link.STL"/>
+        <mesh name="waist_yaw_link" file="waist_yaw_link.STL"/>
+        <mesh name="waist_roll_link" file="waist_roll_link.STL"/>
+        <mesh name="torso_link" file="torso_link.STL"/>
+        <mesh name="logo_link" file="logo_link.STL"/>
+        <mesh name="head_link" file="head_link.STL"/>
+        <mesh name="waist_support_link" file="waist_support_link.STL"/>
+        <mesh name="left_shoulder_pitch_link" file="left_shoulder_pitch_link.STL"/>
+        <mesh name="left_shoulder_roll_link" file="left_shoulder_roll_link.STL"/>
+        <mesh name="left_shoulder_yaw_link" file="left_shoulder_yaw_link.STL"/>
+        <mesh name="left_elbow_link" file="left_elbow_link.STL"/>
+        <mesh name="left_wrist_roll_link" file="left_wrist_roll_link.STL"/>
+        <mesh name="left_wrist_pitch_link" file="left_wrist_pitch_link.STL"/>
+        <mesh name="left_wrist_yaw_link" file="left_wrist_yaw_link.STL"/>
+        <mesh name="left_hand_palm_link" file="left_hand_palm_link.STL"/>
+        <mesh name="left_hand_thumb_0_link" file="left_hand_thumb_0_link.STL"/>
+        <mesh name="left_hand_thumb_1_link" file="left_hand_thumb_1_link.STL"/>
+        <mesh name="left_hand_thumb_2_link" file="left_hand_thumb_2_link.STL"/>
+        <mesh name="left_hand_middle_0_link" file="left_hand_middle_0_link.STL"/>
+        <mesh name="left_hand_middle_1_link" file="left_hand_middle_1_link.STL"/>
+        <mesh name="left_hand_index_0_link" file="left_hand_index_0_link.STL"/>
+        <mesh name="left_hand_index_1_link" file="left_hand_index_1_link.STL"/>
+        <mesh name="right_shoulder_pitch_link" file="right_shoulder_pitch_link.STL"/>
+        <mesh name="right_shoulder_roll_link" file="right_shoulder_roll_link.STL"/>
+        <mesh name="right_shoulder_yaw_link" file="right_shoulder_yaw_link.STL"/>
+        <mesh name="right_elbow_link" file="right_elbow_link.STL"/>
+        <mesh name="right_wrist_roll_link" file="right_wrist_roll_link.STL"/>
+        <mesh name="right_wrist_pitch_link" file="right_wrist_pitch_link.STL"/>
+        <mesh name="right_wrist_yaw_link" file="right_wrist_yaw_link.STL"/>
+        <mesh name="right_hand_palm_link" file="right_hand_palm_link.STL"/>
+        <mesh name="right_hand_thumb_0_link" file="right_hand_thumb_0_link.STL"/>
+        <mesh name="right_hand_thumb_1_link" file="right_hand_thumb_1_link.STL"/>
+        <mesh name="right_hand_thumb_2_link" file="right_hand_thumb_2_link.STL"/>
+        <mesh name="right_hand_middle_0_link" file="right_hand_middle_0_link.STL"/>
+        <mesh name="right_hand_middle_1_link" file="right_hand_middle_1_link.STL"/>
+        <mesh name="right_hand_index_0_link" file="right_hand_index_0_link.STL"/>
+        <mesh name="right_hand_index_1_link" file="right_hand_index_1_link.STL"/>
+
+    </asset>
+
+
+    <!-- <visual>
+         <global fovy="22.5" offwidth="1000" elevation="-10"/>
+    </visual> -->
+
+
+
+
+    <worldbody>
+        <!-- <camera name="student_view" mode="fixed" pos="0 -1.5 0.7" euler="20 0 0" fovy="90"/> -->
+        <!-- <camera name="student_view" mode="fixed" pos="0 -2 1.2" euler="60 0 0" fovy="90"/> -->
+        <!-- <body name="pelvis" pos="0 4.1 0.793" euler="0 0 -1.57"> -->
+        <body name="pelvis" pos="2 2.1 0.793" euler="0 0 -1.57" >
+            <inertial pos="0 0 -0.07605" quat="1 0 -0.000399148 0" mass="3.813" diaginertia="0.010549 0.0093089 0.0079184"/>
+            <joint name="floating_base_joint" type="free" limited="false" actuatorfrclimited="false"/>
+            <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.2 0.2 0.2 1" mesh="pelvis"/>
+            <geom type="mesh" contype="0" conaffinity="0" group="1" density="0" rgba="0.7 0.7 0.7 1" mesh="pelvis_contour_link"/>
+            <geom type="mesh" rgba="0.7 0.7 0.7 1" mesh="pelvis_contour_link"/>
+            <site name="imu_in_pelvis" size="0.01" pos="0.04525 0 -0.08339"/>
+            <body name="g1_robot" >
+                <include file= "/Users/jiafeng/Desktop/cs440_robotic_project/assets/models/robots/g1_robot/g1_final.xml"/>
+            </body>
+        </body>
+
+        <!-- 添加一个固定的广角摄像机 -->
+        <!-- xyaxes="1 0 0 0 1 0" → 摄像机朝向 xyaxes=" x1  y1  z1  x2  y2  z2
+            1 0 0 → 摄像机的 x 轴指向 +X 方向
+            0 0 1 → 摄像机的 y 轴指向 +Z（向上） fovy="90" → 视角 -->
+        <!-- 0 -2 1.5-->
+        <camera name="student_view" mode="fixed" pos="0 -1 0.5" xyaxes="1 0 0 0 0 .5" fovy="-60"/>
+        
+
+        <!-- 地板 -->
+        <geom name="floor" size="5 5 0.05" type="plane" material="groundplane"/>
+
+        <!-- 墙壁 -->
+        <body name="walls">
+            <geom type="box" size="5 0.1 2.5" pos="0 5 2.5" material="wood" />
+            <geom type="box" size="0.1 5 2.5" pos="-5 0 2.5" material="wood" />
+            <geom type="box" size="0.1 5 2.5" pos="5 0 2.5" material="wood" />
+        </body>
+
+        <!-- 黑板 -->
+        <body name="blackboard" pos="0 4.9 1.8">
+            <geom type="box" size="4.9 0.07 1.285" material="blackboard" />
+            <body name="chalk_holder" pos="0 0 -1.285">
+                <geom type="box" size="2.85 0.214 0.0357" pos="0 0 0" rgba="0.7 0.7 0.7 1" friction="1.5 0.8 0.8" condim="6"/>
+                <!-- 增加一个向上的凸起边缘防止滑落 -->
+                <geom type="box" size="2.85 0.007 0.045" pos="0 -0.214 0.01785" rgba="0.7 0.7 0.7 1" friction="1.5 0.8 0.8"/>
+            </body>
+        </body>
+
+        <!-- 天花板 -->
+        <!-- <body name="ceiling" pos="0 0 5">
+            <geom type="box" size="5 5 0.05" pos="0 0 0" material="tile_white" />
+        </body> -->
+
+
+        <!-- 灯光 -->
+        <light name="ceiling_light1" pos="-1.5 1.5 2.5" dir="0 0 -0.5" diffuse="1 1 1" />
+        <light name="ceiling_light2" pos="1.5 1.5 2.5" dir="0 0 -0.5" diffuse="1 1 1" />
+        <light name="ceiling_light3" pos="-1.5 -1.5 2.5" dir="0 0 -0.5" diffuse="1 1 1" />
+        <light name="ceiling_light4" pos="1.5 -1.5 2.5" dir="0 0 -0.5" diffuse="1 1 1" />
+
+
+        <!-- 讲台 -->
+        <body name="podium" pos="4.4 3.5 0.6">
+            <geom type="box" size="0.35 0.2 0.6" material="wood" />
+        </body>
+
+        <!-- 粉笔 - 调整为更容易抓取的方向 -->
+        <!-- <body name="chalk" pos="0.4 4.75 0.7">
+            <freejoint/>
+            <geom type="cylinder" size="0.01 0.05" rgba="1 0.647 0 1" euler="0 90 0" mass="0.05" friction="2.0 1.0 1.0" condim="6"/> -->
+        <!-- 简化几何体，只保留必要的部分 -->
+        <!-- <site name="chalk_grasp_site" pos="0 0 0" size="0.02"/>
+        </body> -->
+
+
+        <!-- 复制桌椅(0,0) -->
+        <body name="table1" pos="-3 0 0.5">
+            <!-- 桌面 size="x y z"，分别表示长、宽和高的一半-->
+            <geom type="box" size="0.8 0.4 0.05" rgba="0.7 0.5 0.3 1" />
+            <!-- 桌腿  半径:0.05, 高度0.25*2-->
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 -0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 -0.3 -0.25" material="metal" />
+        </body>
+        <body name="chair1" pos="-3 -0.8 0.25">
+            <!-- 椅子坐垫 -->
+            <geom type="box" size="0.3 0.3 0.02" rgba="0.3 0.3 0.3 1" />
+            <!-- 椅子腿 -->
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 -0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 -0.25 -0.1" material="metal" />
+            <!-- 椅子靠背 -->
+            <geom type="box" size="0.3 0.05 0.3" pos="0 -0.25 0.3" rgba="0.3 0.3 0.3 1" />
+        </body>
+
+
+        <!-- 复制桌椅(0,1) -->
+        <body name="table2" pos="0 0 0.5">
+            <!-- 桌面 -->
+            <geom type="box" size="0.8 0.4 0.05" rgba="0.7 0.5 0.3 1" />
+            <!-- 桌腿 -->
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 -0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 -0.3 -0.25" material="metal" />
+        </body>
+        <body name="chair2" pos="0 -0.8 0.25">
+            <!-- 椅子坐垫 -->
+            <geom type="box" size="0.3 0.3 0.02" rgba="0.3 0.3 0.3 1" />
+            <!-- 椅子腿 -->
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 -0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 -0.25 -0.1" material="metal" />
+            <!-- 椅子靠背 -->
+            <geom type="box" size="0.3 0.05 0.3" pos="0 -0.25 0.3" rgba="0.3 0.3 0.3 1" />
+        </body>
+
+
+        <!-- 复制桌椅(0,2)-->
+        <body name="table3" pos="3 0 0.5">
+            <geom type="box" size="0.8 0.4 0.05" rgba="0.7 0.5 0.3 1" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 -0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 -0.3 -0.25" material="metal" />
+        </body>
+        <body name="chair3" pos="3 -0.8 0.25">
+            <geom type="box" size="0.3 0.3 0.02" rgba="0.3 0.3 0.3 1" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 -0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 -0.25 -0.1" material="metal" />
+            <geom type="box" size="0.3 0.05 0.3" pos="0 -0.2 0.3" rgba="0.3 0.3 0.3 1" />
+        </body>
+
+
+
+
+
+        <!-- 桌子和椅子（1，0） -->
+        <body name="table4" pos="-3 -2 0.5">
+            <!-- 桌面 -->
+            <geom type="box" size="0.8 0.4 0.05" rgba="0.7 0.5 0.3 1" />
+            <!-- 桌腿 -->
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 -0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 -0.3 -0.25" material="metal" />
+        </body>
+        <body name="chair4" pos="-3 -2.8 0.25">
+            <!-- 椅子坐垫 -->
+            <geom type="box" size="0.3 0.3 0.02" rgba="0.3 0.3 0.3 1" />
+            <!-- 椅子腿 -->
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 -0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 -0.25 -0.1" material="metal" />
+            <!-- 椅子靠背 -->
+            <geom type="box" size="0.3 0.05 0.3" pos="0 -0.25 0.3" rgba="0.3 0.3 0.3 1" />
+        </body>
+
+
+        <!-- 复制桌椅（1，1） -->
+        <body name="table5" pos="0 -2 0.5">
+            <geom type="box" size="0.8 0.4 0.05" rgba="0.7 0.5 0.3 1" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 -0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 -0.3 -0.25" material="metal" />
+        </body>
+        <body name="chair5" pos="0 -2.8 0.25">
+            <geom type="box" size="0.3 0.3 0.02" rgba="0.3 0.3 0.3 1" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 -0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 -0.25 -0.1" material="metal" />
+            <geom type="box" size="0.3 0.05 0.3" pos="0 -0.2 0.3" rgba="0.3 0.3 0.3 1" />
+        </body>
+
+
+        <!-- 复制桌椅（1，2） -->
+        <body name="table6" pos="3 -2 0.5">
+            <geom type="box" size="0.8 0.4 0.05" rgba="0.7 0.5 0.3 1" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 -0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 -0.3 -0.25" material="metal" />
+        </body>
+        <body name="chair6" pos="3 -2.8 0.25">
+            <geom type="box" size="0.3 0.3 0.02" rgba="0.3 0.3 0.3 1" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 -0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 -0.25 -0.1" material="metal" />
+            <geom type="box" size="0.3 0.05 0.3" pos="0 -0.2 0.3" rgba="0.3 0.3 0.3 1" />
+        </body>
+
+
+        <!-- 桌子和椅子（2，0） -->
+        <body name="table7" pos="-3 -4 0.5">
+            <!-- 桌面 -->
+            <geom type="box" size="0.8 0.4 0.05" rgba="0.7 0.5 0.3 1" />
+            <!-- 桌腿 -->
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 -0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 -0.3 -0.25" material="metal" />
+        </body>
+        <body name="chair7" pos="-3 -4.8 0.25">
+            <!-- 椅子坐垫 -->
+            <geom type="box" size="0.3 0.3 0.02" rgba="0.3 0.3 0.3 1" />
+            <!-- 椅子腿 -->
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 -0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 -0.25 -0.1" material="metal" />
+            <!-- 椅子靠背 -->
+            <geom type="box" size="0.3 0.05 0.3" pos="0 -0.25 0.3" rgba="0.3 0.3 0.3 1" />
+        </body>
+
+
+        <!-- 复制桌椅（2，1） -->
+        <body name="table8" pos="0 -4 0.5">
+            <geom type="box" size="0.8 0.4 0.05" rgba="0.7 0.5 0.3 1" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 -0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 -0.3 -0.25" material="metal" />
+        </body>
+        <body name="chair8" pos="0 -4.8 0.25">
+            <geom type="box" size="0.3 0.3 0.02" rgba="0.3 0.3 0.3 1" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 -0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 -0.25 -0.1" material="metal" />
+            <geom type="box" size="0.3 0.05 0.3" pos="0 -0.2 0.3" rgba="0.3 0.3 0.3 1" />
+        </body>
+
+
+        <!-- 复制桌椅（2，2） -->
+        <body name="table9" pos="3 -4 0.5">
+            <geom type="box" size="0.8 0.4 0.05" rgba="0.7 0.5 0.3 1" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="0.7 -0.3 -0.25" material="metal" />
+            <geom type="cylinder" size="0.05 0.25" pos="-0.7 -0.3 -0.25" material="metal" />
+        </body>
+        <body name="chair9" pos="3 -4.8 0.25">
+            <geom type="box" size="0.3 0.3 0.02" rgba="0.3 0.3 0.3 1" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="0.25 -0.25 -0.1" material="metal" />
+            <geom type="cylinder" size="0.02 0.15" pos="-0.25 -0.25 -0.1" material="metal" />
+            <geom type="box" size="0.3 0.05 0.3" pos="0 -0.2 0.3" rgba="0.3 0.3 0.3 1" />
+        </body>
+
+    </worldbody>
+
+    <actuator>
+        <motor name="left_hip_pitch_joint" joint="left_hip_pitch_joint"/>
+        <motor name="left_hip_roll_joint" joint="left_hip_roll_joint"/>
+        <motor name="left_hip_yaw_joint" joint="left_hip_yaw_joint"/>
+        <motor name="left_knee_joint" joint="left_knee_joint"/>
+        <motor name="left_ankle_pitch_joint" joint="left_ankle_pitch_joint"/>
+        <motor name="left_ankle_roll_joint" joint="left_ankle_roll_joint"/>
+        <motor name="right_hip_pitch_joint" joint="right_hip_pitch_joint"/>
+        <motor name="right_hip_roll_joint" joint="right_hip_roll_joint"/>
+        <motor name="right_hip_yaw_joint" joint="right_hip_yaw_joint"/>
+        <motor name="right_knee_joint" joint="right_knee_joint"/>
+        <motor name="right_ankle_pitch_joint" joint="right_ankle_pitch_joint"/>
+        <motor name="right_ankle_roll_joint" joint="right_ankle_roll_joint"/>
+        <motor name="waist_yaw_joint" joint="waist_yaw_joint"/>
+        <motor name="waist_roll_joint" joint="waist_roll_joint"/>
+        <motor name="waist_pitch_joint" joint="waist_pitch_joint"/>
+        <motor name="left_shoulder_pitch_joint" joint="left_shoulder_pitch_joint"/>
+        <motor name="left_shoulder_roll_joint" joint="left_shoulder_roll_joint"/>
+        <motor name="left_shoulder_yaw_joint" joint="left_shoulder_yaw_joint"/>
+        <motor name="left_elbow_joint" joint="left_elbow_joint"/>
+        <motor name="left_wrist_roll_joint" joint="left_wrist_roll_joint"/>
+        <motor name="left_wrist_pitch_joint" joint="left_wrist_pitch_joint"/>
+        <motor name="left_wrist_yaw_joint" joint="left_wrist_yaw_joint"/>
+        <motor name="right_shoulder_pitch_joint" joint="right_shoulder_pitch_joint"/>
+        <motor name="right_shoulder_roll_joint" joint="right_shoulder_roll_joint"/>
+        <motor name="right_shoulder_yaw_joint" joint="right_shoulder_yaw_joint"/>
+        <motor name="right_elbow_joint" joint="right_elbow_joint"/>
+        <motor name="right_wrist_roll_joint" joint="right_wrist_roll_joint"/>
+        <motor name="right_wrist_pitch_joint" joint="right_wrist_pitch_joint"/>
+        <motor name="right_wrist_yaw_joint" joint="right_wrist_yaw_joint"/>
+        <motor name="right_hand_palm_joint" joint="right_hand_palm_joint"/>
+    </actuator>
+
+    <sensor>
+        <gyro name="imu-torso-angular-velocity" site="imu_in_torso" noise="5e-4" cutoff="34.9"/>
+        <accelerometer name="imu-torso-linear-acceleration" site="imu_in_torso" noise="1e-2" cutoff="157"/>
+        <!-- <gyro name="imu-pelvis-angular-velocity" site="imu_in_pelvis" noise="5e-4" cutoff="34.9"/>
+    <accelerometer name="imu-pelvis-linear-acceleration" site="imu_in_pelvis" noise="1e-2" cutoff="157"/> -->
+    </sensor>
+
+
+</mujoco>

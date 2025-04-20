@@ -1,0 +1,199 @@
+/* Main CSS file for RoboLab platform */
+
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #2c3e50;
+    --accent-color: #3498db;
+    --background-color: #f5f5f5;
+    --card-bg-color: #ffffff;
+    --text-color: #333333;
+    --text-light: #6c757d;
+    --border-color: #dee2e6;
+    --dark-bg: #1a1a1a;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --info-color: #17a2b8;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: var(--secondary-color);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-brand img {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+    padding: 0.7rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #fff;
+    background-color: rgba(255,255,255,0.1);
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #fff;
+    background-color: var(--primary-color);
+}
+
+.github-link {
+    color: #fff;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+.highlight {
+    color: var(--primary-color);
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.card-header {
+    background-color: rgba(0,0,0,0.02);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 6px;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #3d8b40;
+    border-color: #3d8b40;
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Footer */
+footer {
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #1a252f 100%);
+    color: white;
+    padding: 5rem 0;
+    margin-bottom: 2rem;
+}
+
+.hero-section h1 {
+    color: white;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+.hero-section p {
+    color: rgba(255,255,255,0.9);
+    font-size: 1.2rem;
+}
+
+.hero-section img {
+    border: 5px solid rgba(255,255,255,0.1);
+}
+
+/* Status Indicators */
+.status {
+    font-weight: 500;
+}
+
+/* Forms */
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-select,
+.form-control {
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .hero-section {
+        padding: 3rem 0;
+        text-align: center;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+}

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Comparison - Physical Control | RoboLab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-house-door"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#research"><i class="bi bi-journal-text"></i> Research</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/simulator"><i class="bi bi-controller"></i> Simulator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/physical-control"><i class="bi bi-sliders"></i> Physical Control</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#visualization"><i class="bi bi-bar-chart-line"></i> Visualization</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link github-link" href="https://github.com/your-username/robolab" target="_blank">
+                            <i class="bi bi-github"></i> GitHub
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="bg-light py-2">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/physical-control">Physical Control</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Algorithm Comparison</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="py-4 bg-primary text-white">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Algorithm Comparison</h1>
+            <p class="lead">Compare different control algorithms across various performance metrics</p>
+        </div>
+    </header>
+
+    <!-- Algorithm Comparison Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Comparison Matrix</h3>
+                            <p class="card-text">This matrix compares different control algorithms based on key performance metrics. Use this to decide which approach best fits your specific application needs.</p>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>Algorithm</th>
+                                            <th>Convergence Speed</th>
+                                            <th>Stability</th>
+                                            <th>Robustness</th>
+                                            <th>Computational Cost</th>
+                                            <th>Implementation Complexity</th>
+                                            <th>Adaptability</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>PID</strong></td>
+                                            <td>Medium</td>
+                                            <td>Good</td>
+                                            <td>Medium</td>
+                                            <td>Low</td>
+                                            <td>Low</td>
+                                            <td>Low</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Adaptive PID</strong></td>
+                                            <td>Medium-High</td>
+                                            <td>Good</td>
+                                            <td>High</td>
+                                            <td>Medium</td>
+                                            <td>Medium</td>
+                                            <td>Medium</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Model Predictive Control</strong></td>
+                                            <td>High</td>
+                                            <td>Very Good</td>
+                                            <td>High</td>
+                                            <td>High</td>
+                                            <td>High</td>
+                                            <td>Medium</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Pure RL</strong></td>
+                                            <td>Very Low (training), Very High (execution)</td>
+                                            <td>Medium</td>
+                                            <td>Medium-High</td>
+                                            <td>Very High (training), Medium (execution)</td>
+                                            <td>High</td>
+                                            <td>High</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>RL + PID Hybrid</strong></td>
+                                            <td>Medium</td>
+                                            <td>Good</td>
+                                            <td>High</td>
+                                            <td>Medium-High</td>
+                                            <td>High</td>
+                                            <td>High</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4 mt-4">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Use Case Comparison</h3>
+                            <p class="card-text">Different algorithms are suited for different robotics applications. This table helps identify which algorithm might be best for your specific use case.</p>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="table-primary">
+                                        <tr>
+                                            <th>Use Case</th>
+                                            <th>Recommended Algorithm</th>
+                                            <th>Alternative Algorithm</th>
+                                            <th>Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Precise Position Control</strong></td>
+                                            <td>PID with Feedforward</td>
+                                            <td>Model Predictive Control</td>
+                                            <td>PID works well when system dynamics are well understood</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Adaptive Tracking</strong></td>
+                                            <td>Adaptive PID</td>
+                                            <td>RL + PID Hybrid</td>
+                                            <td>Hybrid approaches can handle changing payloads better</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Complex Dynamics</strong></td>
+                                            <td>Model Predictive Control</td>
+                                            <td>Pure RL</td>
+                                            <td>MPC requires an accurate model, RL requires extensive training</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Sparse Point Tracking</strong></td>
+                                            <td>Regularized PID</td>
+                                            <td>Robust Control</td>
+                                            <td>Regularization helps when dealing with limited data points</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Real-time Performance</strong></td>
+                                            <td>PID</td>
+                                            <td>Pre-trained RL</td>
+                                            <td>Simple PID has minimal computational overhead</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4 mt-4">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title">Add Your Own Comparison</h3>
+                            <p class="card-text">Have you implemented a control algorithm not listed here? Add your own comparison data to help others.</p>
+                            
+                            <form>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="algorithmName" class="form-label">Algorithm Name</label>
+                                        <input type="text" class="form-control" id="algorithmName" placeholder="Enter algorithm name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="algorithmCategory" class="form-label">Category</label>
+                                        <select class="form-select" id="algorithmCategory">
+                                            <option selected>Select a category</option>
+                                            <option value="traditional">Traditional Control</option>
+                                            <option value="learning">Learning-based Control</option>
+                                            <option value="hybrid">Hybrid Approach</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="convergenceSpeed" class="form-label">Convergence Speed</label>
+                                        <select class="form-select" id="convergenceSpeed">
+                                            <option>Very Low</option>
+                                            <option>Low</option>
+                                            <option selected>Medium</option>
+                                            <option>High</option>
+                                            <option>Very High</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="stability" class="form-label">Stability</label>
+                                        <select class="form-select" id="stability">
+                                            <option>Poor</option>
+                                            <option>Fair</option>
+                                            <option selected>Good</option>
+                                            <option>Very Good</option>
+                                            <option>Excellent</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="robustness" class="form-label">Robustness</label>
+                                        <select class="form-select" id="robustness">
+                                            <option>Very Low</option>
+                                            <option>Low</option>
+                                            <option selected>Medium</option>
+                                            <option>High</option>
+                                            <option>Very High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="computationalCost" class="form-label">Computational Cost</label>
+                                        <select class="form-select" id="computationalCost">
+                                            <option>Very Low</option>
+                                            <option>Low</option>
+                                            <option selected>Medium</option>
+                                            <option>High</option>
+                                            <option>Very High</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="implementationComplexity" class="form-label">Implementation Complexity</label>
+                                        <select class="form-select" id="implementationComplexity">
+                                            <option>Very Low</option>
+                                            <option>Low</option>
+                                            <option selected>Medium</option>
+                                            <option>High</option>
+                                            <option>Very High</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="adaptability" class="form-label">Adaptability</label>
+                                        <select class="form-select" id="adaptability">
+                                            <option>Very Low</option>
+                                            <option>Low</option>
+                                            <option selected>Medium</option>
+                                            <option>High</option>
+                                            <option>Very High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="algorithmNotes" class="form-label">Notes/Comments</label>
+                                    <textarea class="form-control" id="algorithmNotes" rows="3" placeholder="Add any additional notes or insights about this algorithm"></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">Add to Comparison</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container text-center">
+            <p>© 2025 RoboLab - Robotics Education & Research Platform. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

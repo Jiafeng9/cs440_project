@@ -1,0 +1,15 @@
+flask==2.2.3
+flask-socketio==5.3.2
+mujoco==2.3.2
+numpy
+opencv-python-4.11.0.86
+eventlet==0.33.3
+python-engineio==4.3.4
+python-socketio==5.7.2
+Flask
+Flask-SocketIO
+mujoco
+transformers
+smplx
+pyrender
+tqdm

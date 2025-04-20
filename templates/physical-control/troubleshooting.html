@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting Guide - Physical Control | RoboLab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-house-door"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#research"><i class="bi bi-journal-text"></i> Research</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/simulator"><i class="bi bi-controller"></i> Simulator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/physical-control"><i class="bi bi-sliders"></i> Physical Control</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#visualization"><i class="bi bi-bar-chart-line"></i> Visualization</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link github-link" href="https://github.com/your-username/robolab" target="_blank">
+                            <i class="bi bi-github"></i> GitHub
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="bg-light py-2">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/physical-control">Physical Control</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Troubleshooting Guide</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="py-4 bg-primary text-white">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Troubleshooting Guide</h1>
+            <p class="lead">Common issues and solutions when implementing control algorithms</p>
+        </div>
+    </header>
+
+    <!-- Troubleshooting Section -->
+    <section class="py-5">
+        <div class="container">
+            <!-- Quick Navigation Tabs -->
+            <ul class="nav nav-tabs mb-4" id="troubleshootingTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="point-tracking-tab" data-bs-toggle="tab" data-bs-target="#point-tracking" type="button" role="tab" aria-controls="point-tracking" aria-selected="true">
+                        <i class="bi bi-pin-map"></i> Point Tracking Issues
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="oscillation-tab" data-bs-toggle="tab" data-bs-target="#oscillation" type="button" role="tab" aria-controls="oscillation" aria-selected="false">
+                        <i class="bi bi-activity"></i> Oscillation Issues
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="convergence-tab" data-bs-toggle="tab" data-bs-target="#convergence" type="button" role="tab" aria-controls="convergence" aria-selected="false">
+                        <i class="bi bi-arrow-down-right-circle"></i> Convergence Issues
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="noise-tab" data-bs-toggle="tab" data-bs-target="#noise" type="button" role="tab" aria-controls="noise" aria-selected="false">
+                        <i class="bi bi-soundwave"></i> Noise Handling
+                    </button>
+                </li>
+            </ul>
+            
+            <!-- Tab Content -->
+            <div class="tab-content" id="troubleshootingTabContent">
+                <!-- Point Tracking Issues Tab -->
+                <div class="tab-pane fade show active" id="point-tracking" role="tabpanel" aria-labelledby="point-tracking-tab">
+                    <div class="accordion" id="pointTrackingAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Algorithm Fails with Small Number of Points
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#pointTrackingAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="{{ url_for('static', filename='images/sparse_points.png') }}" alt="Sparse Points Problem" class="img-fluid rounded mb-3">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p><strong>Issue:</strong> Control algorithm fails to converge or produces erratic behavior when only a few points are marked.</p>
+                                            
+                                            <h5>Potential Causes:</h5>
+                                            <ul>
+                                                <li>Insufficient data for pattern recognition</li>
+                                                <li>Noise sensitivity with sparse data</li>
+                                                <li>Local minima in optimization landscape</li>
+                                                <li>Overfitting to limited data points</li>
+                                            </ul>
+                                            
+                                            <h5>Solutions:</h5>
+                                            <ol>
+                                                <li>Add regularization to prevent overfitting</li>
+                                                <li>Use robust estimation techniques less sensitive to outliers</li>
+                                                <li>Implement multi-start optimization to avoid local minima</li>
+                                                <li>Consider using prior models when data is sparse</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="code-sample bg-dark text-light p-3 rounded mt-3">
+                                        <pre>
+# Example Python code for robust estimation
+from sklearn.linear_model import RANSACRegressor
+
+# Use RANSAC for robust regression with few points
+ransac = RANSACRegressor()
+ransac.fit(X_sparse, y_sparse)
+
+# Get inlier mask
+inlier_mask = ransac.inlier_mask_
+outlier_mask = np.logical_not(inlier_mask)
+
+# Predict using the robust model
+y_pred = ransac.predict(X_test)
+                                        </pre>
+                                    </div>
+                                    
+                                    <div class="mt-3">
+                                        <h5>Real-World Example:</h5>
+                                        <p>In a robotic arm control experiment, we noticed that with fewer than 5 tracking points, the PID controller would occasionally produce unstable movements. By implementing Tikhonov regularization in our state estimator, we were able to achieve stable control even with just 3 tracking points.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Tracking Drift Over Time
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#pointTrackingAccordion">
+                                <div class="accordion-body">
+                                    <p><strong>Issue:</strong> Even after initially successful point tracking, the controller gradually loses accuracy over time.</p>
+                                    
+                                    <h5>Potential Causes:</h5>
+                                    <ul>
+                                        <li>Sensor drift</li>
+                                        <li>Uncompensated thermal effects</li>
+                                        <li>Mechanical wear</li>
+                                        <li>Accumulation of small numerical errors</li>
+                                    </ul>
+                                    
+                                    <h5>Solutions:</h5>
+                                    <ol>
+                                        <li>Implement periodic recalibration</li>
+                                        <li>Use Kalman filtering to account for sensor drift</li>
+                                        <li>Add integral feedback terms to compensate for gradual changes</li>
+                                        <li>Implement adaptive control that updates model parameters</li>
+                                    </ol>
+                                    
+                                    <!-- Additional content similar to above -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional accordion items for other point tracking issues -->
+                    </div>
+                </div>
+                
+                <!-- Oscillation Issues Tab -->
+                <div class="tab-pane fade" id="oscillation" role="tabpanel" aria-labelledby="oscillation-tab">
+                    <div class="accordion" id="oscillationAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOsc1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOsc1" aria-expanded="true" aria-controls="collapseOsc1">
+                                    PID Controller Oscillation
+                                </button>
+                            </h2>
+                            <div id="collapseOsc1" class="accordion-collapse collapse show" aria-labelledby="headingOsc1" data-bs-parent="#oscillationAccordion">
+                                <div class="accordion-body">
+                                    <p><strong>Issue:</strong> PID controller exhibits continuous oscillations around the target position.</p>
+                                    
+                                    <h5>Potential Causes:</h5>
+                                    <ul>
+                                        <li>Excessive proportional gain (Kp)</li>
+                                        <li>Insufficient derivative gain (Kd)</li>
+                                        <li>System delays and latency</li>
+                                        <li>Derivative term amplifying noise</li>
+                                    </ul>
+                                    
+                                    <h5>Solutions:</h5>
+                                    <ol>
+                                        <li>Reduce proportional gain</li>
+                                        <li>Increase derivative gain to dampen oscillations</li>
+                                        <li>Implement derivative filtering</li>
+                                        <li>Consider adding feedforward control to reduce the reliance on feedback</li>
+                                    </ol>
+                                    
+                                    <!-- Code example and real-world example would go here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Additional oscillation issues -->
+                    </div>
+                </div>
+                
+                <!-- Convergence Issues Tab -->
+                <div class="tab-pane fade" id="convergence" role="tabpanel" aria-labelledby="convergence-tab">
+                    <!-- Content similar to the other tabs -->
+                    <p>Convergence issues content would go here...</p>
+                </div>
+                
+                <!-- Noise Handling Tab -->
+                <div class="tab-pane fade" id="noise" role="tabpanel" aria-labelledby="noise-tab">
+                    <!-- Content similar to the other tabs -->
+                    <p>Noise handling content would go here...</p>
+                </div>
+            </div>
+            
+            <div class="card mt-5">
+                <div class="card-body">
+                    <h3 class="card-title">Submit a New Issue</h3>
+                    <p class="card-text">Found an issue not listed here? Help expand our troubleshooting knowledge base by submitting your problem and solution.</p>
+                    
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newIssueModal">
+                        <i class="bi bi-plus-circle"></i> Report New Issue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Issue Modal -->
+    <div class="modal fade" id="newIssueModal" tabindex="-1" aria-labelledby="newIssueModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newIssueModalLabel">Report New Issue</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="issueTitle" class="form-label">Issue Title</label>
+                            <input type="text" class="form-control" id="issueTitle" placeholder="Enter a descriptive title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="issueCategory" class="form-label">Category</label>
+                            <select class="form-select" id="issueCategory">
+                                <option selected>Select a category</option>
+                                <option value="point-tracking">Point Tracking</option>
+                                <option value="oscillation">Oscillation</option>
+                                <option value="convergence">Convergence</option>
+                                <option value="noise">Noise Handling</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="issueDescription" class="form-label">Issue Description</label>
+                            <textarea class="form-control" id="issueDescription" rows="3" placeholder="Describe the issue in detail..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="issueCauses" class="form-label">Potential Causes</label>
+                            <textarea class="form-control" id="issueCauses" rows="3" placeholder="What might be causing this issue?"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="issueSolutions" class="form-label">Solutions</label>
+                            <textarea class="form-control" id="issueSolutions" rows="3" placeholder="How did you solve or work around this issue?"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="issueCode" class="form-label">Code Example (optional)</label>
+                            <textarea class="form-control" id="issueCode" rows="5" placeholder="# Add code example here..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="issueImage" class="form-label">Related Image (optional)</label>
+                            <input class="form-control" type="file" id="issueImage">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Submit Issue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container text-center">
+            <p>© 2025 RoboLab - Robotics Education & Research Platform. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

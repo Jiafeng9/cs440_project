@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Bootstrap 5:https://www.w3school.com.cn/bootstrap5/bootstrap_navbar.asp -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Education & Research Platform | RoboLab</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/"><i class="bi bi-house-door"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#research"><i class="bi bi-journal-text"></i> Research</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/simulator"><i class="bi bi-controller"></i> Simulator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/physical-control"><i class="bi bi-sliders"></i> Physical Control</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#visualization"><i class="bi bi-bar-chart-line"></i> Visualization</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link github-link" href="https://github.com/your-username/robolab" target="_blank">
+                            <i class="bi bi-github"></i> GitHub
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <h1 class="display-4 fw-bold">Robotics Education & Research</h1>
+                    <p class="lead my-4">A modular platform for exploring robotic research, interactive teaching tools, and real-time visualization of control algorithms and motion tracking.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="/simulator" class="btn btn-primary btn-lg">
+                            <i class="bi bi-controller"></i> Try Simulator
+                        </a>
+                        <a href="#visualization" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-bar-chart-line"></i> Try Visualization
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Simulator Feature -->
+    <section class="py-5" id="simulator-feature">
+        <div class="container">
+            <h2 class="display-5 fw-bold text-center">High-Performance <span class="highlight">MuJoCo Simulator</span></h2>
+            <p class="lead text-muted text-center">Real-time physics simulation for robotics research and education</p>
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Features</h3>
+                            <ul class="list-unstyled">
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i> Real-time physics simulation</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i> Multiple rendering backends (GLFW, EGL, OSMesa)</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i> Performance optimization for different hardware</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i> Adjustable quality settings</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i> Support for high-resolution rendering</li>
+                            </ul>
+                            <a href="/simulator" class="btn btn-primary mt-3">
+                                <i class="bi bi-controller"></i> Launch Simulator
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Tracker -->
+    <section class="py-5 bg-light" id="research">
+        <div class="container">
+            <h2 class="display-5 fw-bold text-center">Cutting-Edge <span class="highlight">Research Tracker</span></h2>
+            <p class="lead text-muted text-center">Latest papers and breakthroughs in robotics, control systems, and AI-powered automation.</p>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Recent Advances in AI-Driven Robotics</h3>
+                            <p class="card-text">Tracking the latest research in reinforcement learning, imitation learning, and adaptive control for robotics.</p>
+                            <a href="#" class="btn btn-outline-primary">View Papers</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Open-Source Robotics Frameworks</h3>
+                            <p class="card-text">An overview of the most popular and actively developed robotics frameworks.</p>
+                            <a href="#" class="btn btn-outline-primary">Explore Frameworks</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visualization -->
+    <section class="py-5" id="visualization">
+        <div class="container">
+            <h2 class="display-5 fw-bold text-center">Real-Time <span class="highlight">Visualization</span></h2>
+            <p class="lead text-muted text-center">Analyze robot joint movements, control strategies, and trajectory optimizations.</p>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Motion Tracking</h3>
+                            <p class="card-text">Visualize real-time joint movement data and compare different control strategies.</p>
+                            <a href="#" class="btn btn-outline-primary">Start Tracking</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title">Trajectory Optimization</h3>
+                            <p class="card-text">Experiment with different trajectory planning algorithms for robotic arms and legged locomotion.</p>
+                            <a href="#" class="btn btn-outline-primary">Try Optimization</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4">
+        <div class="container text-center">
+            <p>© 2025 RoboLab - Robotics Education & Research Platform. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!--https://blog.csdn.net/2303_80346267/article/details/142903082-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
