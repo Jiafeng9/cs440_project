@@ -77,7 +77,7 @@ def find_model_xml(model_name):
     return None
 
 class ActionStateManager:
-    """动作状态管理器 - 管理动作序列和状态转换"""
+    """Action state controller - manage the action sequence and state transitions"""
     
     def __init__(self, simulator):
         self.simulator = simulator
@@ -85,80 +85,81 @@ class ActionStateManager:
         self.action_queue = []
         self.is_running = False
         self.socket_emit_func = None
-        self.transition_time = 0.5  # 动作间过渡时间
+        self.transition_time = 0.5  # action transition time
     
     def set_socket_func(self, socket_emit_func):
-        """设置Socket通信函数"""
+        """Set Socket communication function"""
         self.socket_emit_func = socket_emit_func
     
     def queue_actions(self, actions):
-        """设置动作队列"""
+        """Set the action queue"""
         self.action_queue = actions.copy()
         self.current_action = None
         return True
     
     def start_sequence(self, socket_emit_func=None):
-        """开始执行动作序列"""
+        """Start executing the action sequence"""
         if socket_emit_func:
             self.set_socket_func(socket_emit_func)
             
         if not self.socket_emit_func:
-            print("警告: 未设置Socket通信函数")
+            print("Warning: Socket emit function not set")
             return False
-            
+
+    
         if self.is_running:
-            print("动作序列已在运行中")
+            print("action sequence is already running")
             return False
             
         self.is_running = True
         
-        # 启动处理线程
+        # Start processing thread
         thread = threading.Thread(target=self._process_action_queue)
         thread.daemon = True
         thread.start()
         return True
     
     def _process_action_queue(self):
-        """处理动作队列的内部方法"""
+        """Internal method to process the action queue"""
         try:
             while self.action_queue and self.is_running:
-                # 获取下一个动作
+                # Get the next action
                 next_action = self.action_queue.pop(0)
                 self.current_action = next_action
                 
                 action_type = next_action.get('type')
                 params = next_action.get('params', {})
                 
-                print(f"\n=== 开始执行动作: {action_type} ===")
+                print(f"\n=== Start executing action: {action_type} ===")
                 
-                # 短暂暂停确保前一个动作完全结束
+                # short stop to ensure previous action has completed
                 time.sleep(self.transition_time)
                 
-                # 重置相关状态
+                #reset related states
                 self._reset_action_states()
                 
-                # 执行动作
+                # take the action
                 success = self._execute_action(action_type, params)
                 
                 if not success:
-                    print(f"动作 {action_type} 执行失败")
+                    print(f"action {action_type} execution failed")
                     self.socket_emit_func("action_sequence", {
                         "status": "error", 
                         "action": action_type,
-                        "message": "执行失败"
+                        "message": "action execution failed"
                     })
                     break
                     
-                # 等待动作完成
+                # waiting for action completion
                 self._wait_for_action_completion(action_type)
                 
-                # 动作完成通知
+                # action completed
                 self.socket_emit_func("action_sequence", {
                     "status": "action_completed", 
                     "action": action_type
                 })
                 
-            # 序列完成
+            # sequence completed
             self.is_running = False
             self.current_action = None
             
@@ -166,10 +167,10 @@ class ActionStateManager:
                 "status": "sequence_completed"
             })
             
-            print("\n=== 动作序列执行完毕 ===")
+            print("\n=== Action sequence execution complete ===")
             
         except Exception as e:
-            print(f"动作序列执行出错: {e}")
+            print(f"action sequence processing failed: {e}")
             import traceback
             traceback.print_exc()
             
@@ -180,37 +181,37 @@ class ActionStateManager:
             })
     
     def _reset_action_states(self):
-        """重置所有动作状态"""
-        # 先停止所有活动线程
+        """reset all related states"""
+        # stop all threaded actions
         self.simulator.walking_in_progress = False
         self.simulator.turning_around = False
         self.simulator.writing_in_progress = False
         self.simulator.sound_with_movement = False
         self.simulator.three_stage_active = False
         
-        # 确保线程有足够时间终止
+        # make sure thread has enough time to terminate
         time.sleep(0.5)
-        
-        # 重置速度和控制命令
+    
+        # reset speed and command
         self.simulator.cmd = np.zeros(3, dtype=np.float32)
         
-        # 确保稳定姿势
+        # make sure the gesture
         if not self.simulator._is_in_default_pose():
-            print("重置到默认姿势...")
+            print("reset tp the default version...")
             self.simulator.reset_to_default_pose_with_interpolation(steps=10)
             
-        # 显式调用垃圾回收，释放未使用的资源
+        # release unused resources by using gc module
         import gc
         gc.collect()
     
     def _execute_action(self, action_type, params):
-        """执行指定类型的动作"""
+        """execute specified action with parameters"""
         if action_type == 'sound_movement':
             max_frame = params.get('max_frame', 100)
             return self.simulator.sound_with_movement_simulation(self.socket_emit_func, max_frame)
             
         elif action_type == 'turn':
-            angle = params.get('angle', 1.57)  # 默认90度
+            angle = params.get('angle', 1.57)  # default 90 degrees
             return self.simulator.turning_around_simulation(self.socket_emit_func, [0, 0, angle])
             
         elif action_type == 'stabilize':
@@ -233,11 +234,11 @@ class ActionStateManager:
             return self.simulator.writing_simulation(text, self.socket_emit_func)
             
         else:
-            print(f"未知动作类型: {action_type}")
+            print(f"unknown action type: {action_type}")
             return False
     
     def _wait_for_action_completion(self, action_type):
-        """等待指定动作完成"""
+        """waiting for speficied action to complete"""
         if action_type == 'sound_movement':
             while self.simulator.sound_with_movement:
                 time.sleep(0.2)
@@ -257,8 +258,8 @@ class ActionStateManager:
         elif action_type == 'write':
             while self.simulator.writing_in_progress:
                 time.sleep(0.2)
-                
-        # 额外等待一小段时间确保完全稳定
+            
+        # wait for a small amount of time to ensure the action is completed
         time.sleep(0.5)
         
         
@@ -281,7 +282,7 @@ class MujocoSimulator:
         self.chalk_tip_id = None
         # Shared queue for communication between threads
         self.queue = None
-        self.trajectory_points = collections.deque() #创建一个双端队列(double-ended queue)
+        self.trajectory_points = collections.deque() # create a double-ended queue
         self.trajectory_lock = threading.Lock()
         # Detect best renderer
         self.best_renderer_name = "glfw"
@@ -342,35 +343,35 @@ class MujocoSimulator:
         self.lock_waist = False
         self.lock_legs = True
         self.default_angles = [
-            # 左腿
+            # left leg 
             -0.1, 0.0, 0.0, 0.3, -0.2, 0.0,
-            # 右腿
+            # right leg
             -0.1, 0.0, 0.0, 0.3, -0.2, 0.0,
-            # 腰部
-            -0.2, 0.0, 0.0,  # 适度后倾（z方向轻微调整）
-            # 左臂
+            # waist 
+            -0.2, 0.0, 0.0,  # a little bit bent (z axis adjust)
+            # left arm
             0.2, 0.2, 0.0, -0.3, 0.0, 0.0, 0.0,
-            # 右臂
+            # right arm
             -0.2, 0.2, 0.0, -0.3, 0.0, 0.0, 0.0, 
             0.0,
         ]
         
         self.initial_base_pose = self.data.qpos[:7].copy()
         
-        # G1机器人关节ID
+        # G1 robot joint ID 
         self.g1_joint_ids = {
-            # 腰部关节
+            # waist joints 
             "waist_yaw": 13,    # 腰部偏航 (左右转)
             "waist_roll": 14,   # 腰部侧卷 (侧弯)
             "waist_pitch": 15,  # 腰部俯仰 (前后弯)
             
-            # 左臂关节
+            # left arm joints
             "left_shoulder_pitch": 16,  # 左肩俯仰
             "left_shoulder_roll": 17,   # 左肩侧卷
             "left_shoulder_yaw": 18,    # 左肩偏航
             "left_elbow": 19,           # 左肘
             
-            # 右臂关节
+            # right arm joints
             "right_shoulder_pitch": 23,  # 右肩俯仰
             "right_shoulder_roll": 24,   # 右肩侧卷
             "right_shoulder_yaw": 25,    # 右肩偏航
@@ -1673,7 +1674,7 @@ class MujocoSimulator:
                 self.action[:12] = action_12dof
                 self.target_dof_pos = self.action * self.action_scale + self.default_angles
 
-            # 保持时间一致
+            # keep the time sime 
             time_until_next_step = self.model.opt.timestep - (time.time() - step_start)
             if time_until_next_step > 0:
                 time.sleep(time_until_next_step)
