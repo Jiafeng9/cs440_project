@@ -436,15 +436,15 @@ class MujocoSimulator:
         self.STATE_STABILIZING = 1 
         self.STATE_COMPLETED = 2
         
-        # 当前状态
+        # current state 
         self.current_control_state = self.STATE_BRAKING
         self.phase_counter = 0
         
-        # 时间参数
-        self.braking_frames = int(0.04 / self.simulation_dt)  # 1秒的制动
-        self.stabilizing_frames = int(0.04 / self.simulation_dt)  # 1.5秒的稳定
+        # time parameters
+        self.braking_frames = int(0.04 / self.simulation_dt)  # 1 second of braking
+        self.stabilizing_frames = int(0.04 / self.simulation_dt)  # 1.5 second of stabilizing
         
-        # 保存原始控制参数
+        # keep the original control parameters
         self.original_kps = self.kps.copy() if hasattr(self, 'kps') else None
         self.original_kds = self.kds.copy() if hasattr(self, 'kds') else None
         
@@ -452,98 +452,99 @@ class MujocoSimulator:
         
         
         # walking control
-        self.distance_threshold = 0.15  # 到达目标的阈值（米）
-        self.velocity_threshold = 0.05  # 停止阈值（米/秒）
-        self.max_speed = 0.4  # 最大速度命令
-        self.min_speed = 0.1  # 最小速度命令
+        self.distance_threshold = 0.15  # threshold for reaching the target (meters)
+        self.velocity_threshold = 0.05  # threshold for stopping (meters/second)
+        self.max_speed = 0.4  # maximum speed command
+        self.min_speed = 0.1  # minimum speed command
         
         
         
         self.action_manager = ActionStateManager(self)
         
-    # 添加高级动作序列方法
+    # add advanced action sequence method
     def execute_teaching_sequence(self, socket_emit_func, text_to_speak=""):
-        """执行完整教学序列：说话→转向→稳定→走向→写字"""
+        """Execute the complete teaching sequence: speak, turn, stabilize, walk, write"""
         
-        # 定义动作序列
+        # define action sequence
         action_sequence = [
             {'type': 'sound_movement', 'params': {'max_frame': 100}},
-            {'type': 'turn', 'params': {'angle': 3.14/2}},       # 90度转向
-            {'type': 'walk', 'params': {'distance': 1.8,'position':0}},     # 走2米
+            {'type': 'turn', 'params': {'angle': 3.14/2}},       # 90 degree turn
+            {'type': 'walk', 'params': {'distance': 1.8,'position':0}},     # walk 2 meters
         ]
         for word in text_to_speak:
             if not word.isalpha():
                 continue
             for letter in word:
                 action_sequence.append({'type': 'write', 'params': {'text': letter}})
-                action_sequence.append({'type':'turn','params':{'angle': 1/2}})  # 往左转是正的
+                action_sequence.append({'type':'turn','params':{'angle': 1/2}})  # turing left is positive 
                 action_sequence.append({'type': 'walk', 'params': {'distance': 0.4, 'position':1}})
                 action_sequence.append({'type':'turn','params':{'angle': -1/2}})   
         
-        # 设置动作队列并开始执行
+        # set the action queue and start executing
         self.action_manager.queue_actions(action_sequence)
         return self.action_manager.start_sequence(socket_emit_func)
         
     def calculate_speed_command(self, remaining_distance):
-        """计算基于剩余距离的速度命令 - 简化版"""
-        # 简单的距离到速度映射
+        """calculate speed - simplied version"""
+        """"""
+        # simple distance to speed mapping
         if abs(remaining_distance) < 0.5:
-            # 接近目标，减速
+            # approaching the target, slow down
             speed = max(self.min_speed, abs(remaining_distance) * 0.4)
         else:
-            # 正常行走速度
+            # command walking speed
             speed = 0.3
             
-        # 确定方向
+        # decide the direction
         direction = 1.0 if remaining_distance > 0 else -1.0
         return speed * direction
         
         
         
     def initialize_three_stage_control(self):
-        """初始化三阶段控制参数"""
-        print("\n=== 初始化三阶段控制 ===")
-        # 确保状态和计数器重置
+        """Initialize three-stage control parameters"""
+        print("\n=== Initializing Three-Stage Control ===")
+        # ensure state and counter reset
         self.current_control_state = self.STATE_BRAKING
         self.phase_counter = 0
         
-        # 确保缓存原始控制参数
+        # ensure original control parameters cached
         if not hasattr(self, 'original_kps') or self.original_kps is None:
             self.original_kps = self.kps.copy()
         if not hasattr(self, 'original_kds') or self.original_kds is None:
             self.original_kds = self.kds.copy()
             
-        # 标记为活动状态
+        # sign as active 
         self.three_stage_active = True
     
     # movement with action methods
     def _load_data(self):
-        """加载SMPLX运动数据"""
+        """ load SMPLX motion data"""
         if not os.path.exists(self.motion_path):
-            raise FileNotFoundError(f"找不到运动数据文件: {self.motion_path}")
+            raise FileNotFoundError(f"could not find motion data file: {self.motion_path}")
         
         self.motion_data = np.load(self.motion_path)
-        print(f"已加载运动数据，总帧数: {self.motion_data['poses'].shape[0]}")        
+        print(f"Total motion frames: {self.motion_data['poses'].shape[0]}")        
         
     
     def _extract_local_rotations(self, pose):
         """
-        从姿势数据中提取每个关节的局部旋转
+        Extract local rotations from pose data
         
-        参数:
-            pose: 姿势数据数组
+        Args:
+            pose: pose data array
             
-        返回:
-            local_rotations: 局部旋转字典 {关节ID: Rotation对象}
+        Returns:
+            local_rotations: local rotation dictionary {joint_id: Rotation object}
         """
         local_rotations = {}
         
-        # 为每个关节提取局部旋转
+        # extract local rotations for each joint
         for joint_id, _ in self.smplx_hierarchy:
-            # 获取关节在pose中的索引位置 (每个关节3个值)
+            # get joint index in pose array (each joint has 3 values)
             start_idx = joint_id * 3
             if start_idx + 3 <= len(pose):
-                # 提取关节旋转向量并转换为旋转对象
+                # extract joint rotation vector and convert to Rotation object
                 rot_vec = pose[start_idx:start_idx+3]
                 local_rotations[joint_id] = R.from_rotvec(rot_vec)
         
@@ -551,48 +552,49 @@ class MujocoSimulator:
     
     def _compute_global_rotation(self, joint_id, local_rotations):
         """
-        递归计算关节的全局旋转（考虑父关节的累积旋转）
+        Recursively compute global rotation of a joint (considering parent joint's cumulative rotation)
         
-        参数:
-            joint_id: 关节ID
-            local_rotations: 局部旋转字典
+        Args:
+            joint_id: joint ID
+            local_rotations: local rotation dictionary
             
-        返回:
-            全局旋转(Rotation对象)
+        Returns:
+            global rotation (Rotation object)
         """
-        # 如果是根节点或者关节不在层级中，直接返回局部旋转
+        # if the root joint or joint is not in the hierarchy, return the local rotation
         if joint_id == 0 or joint_id not in self.parent_dict or joint_id not in local_rotations:
             return local_rotations.get(joint_id, R.identity())
         
-        # 获取父关节ID
+        # get parent joint ID
         parent_id = self.parent_dict[joint_id]
         
-        # 如果父节点是自己，返回局部旋转
+        # if the parent joint is the same as the current joint, return the local rotation
         if parent_id == joint_id:
             return local_rotations.get(joint_id, R.identity())
         
-        # 获取父关节的全局旋转
+        # get the global rotation of the parent joint
         parent_global_rot = self._compute_global_rotation(parent_id, local_rotations)
         
-        # 获取当前关节的局部旋转
+        # get the local rotation of the current joint
         local_rot = local_rotations.get(joint_id, R.identity())
         
-        # 全局旋转 = 父关节全局旋转 * 当前关节局部旋转
+        # global rotation = parent joint global rotation * current joint local rotation
         return parent_global_rot * local_rot
     
     def process_frame(self, frame_index):
         """
-        处理单帧SMPLX运动数据，提取关节旋转
+        Process SMPLX motion data for a single frame, extract joint rotations
         
-        返回: 关节旋转字典，{关节ID: Rotation对象}
+        Returns: joint rotation dictionary, {joint_id: Rotation object}
+
         """
-        # 获取当前帧的姿势数据
+        # get the current pose data
         pose = self.motion_data['poses'][frame_index]
         
-        # 提取局部旋转
+        # extract local rotations
         local_rotations = self._extract_local_rotations(pose)
         
-        # 计算每个关节的全局旋转
+        # compute global rotations for each joint
         global_rotations = {}
         for joint_id in local_rotations.keys():
             global_rotations[joint_id] = self._compute_global_rotation(joint_id, local_rotations)
@@ -602,22 +604,22 @@ class MujocoSimulator:
     
     def compute_angles(self, joint_rotations):
         """
-        根据关节旋转计算G1机器人的关节角度
-        
-        返回: G1机器人关节角度数组
+        Calculate joint angles for G1 robot from joint rotations
+        Args:
+            joint_rotations: joint rotation dictionary, {joint_id: Rotation object}
         """
-        # 从默认姿势开始
+        # from default pose
         angles = np.array(self.default_angles[:self.model.nu])
         
-        # 腰部映射
+        # torso mapping
         if not self.lock_waist:
             self._map_torso(angles, joint_rotations)
         
-        # 锁定腿部
+        # lock legs
         if self.lock_legs:
             self._ensure_legs_locked(angles)
         
-        # 手臂映射
+        # arm mapping
         self._map_arm(angles, joint_rotations, is_left=True)
         # self._map_arm(angles, joint_rotations, is_left=False)
         
